@@ -58,7 +58,7 @@ h1 { text-align: center; color: #333; margin: 0; }
 .bg-verde:hover { background-color: #219653; }
 .btn-remover { background-color: #e74c3c; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight:bold;}
 
-/* Legenda & Grid */
+/* LEGENDA E GRID */
 .legenda { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; font-weight: bold; }
 .legenda-item { display: flex; align-items: center; gap: 8px; }
 .cor-box { width: 20px; height: 20px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.2); }
@@ -69,7 +69,7 @@ h1 { text-align: center; color: #333; margin: 0; }
 .quarto { padding: 15px 5px; text-align: center; border-radius: 6px; font-weight: bold; cursor: pointer; color: #333; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s; }
 .quarto:active { transform: scale(0.95); }
 
-/* Status */
+/* STATUS */
 .status-livre { background-color: #A5D6A7; }
 .status-ocupado { background-color: #EF9A9A; }
 .status-limpeza { background-color: #FFF59D; }
@@ -81,21 +81,7 @@ table.tabela-dados { width: 100%; border-collapse: collapse; margin-top: 15px; f
 table.tabela-dados th, table.tabela-dados td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
 table.tabela-dados th { background-color: #f8f9fa; color: #2c3e50; }
 
-/* SEÇÃO DE RESIDÊNCIAS */
-.secao-residencias { background: white; padding: 20px; border-radius: 8px; margin: 30px auto; max-width: 1000px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-.secao-residencias h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-.grid-residencias { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 15px; }
-.card-residencia { border: 1px solid #e0e0e0; border-radius: 8px; padding: 18px; background: #fafafa; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s, box-shadow 0.2s; }
-.card-residencia:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-.card-residencia h3 { margin-top: 0; color: #16a085; font-size: 20px; margin-bottom: 5px; border-bottom: 2px solid #16a085; padding-bottom: 5px; }
-.preco-tag { font-size: 22px; font-weight: bold; color: #2c3e50; margin: 10px 0 2px 0; }
-.preco-sub { font-size: 13px; color: #7f8c8d; margin-bottom: 10px; }
-.lotacao { font-size: 14px; font-weight: bold; color: #e67e22; margin-bottom: 10px; }
-.desc-residencia { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; font-style: italic; }
-.inclusoes-list { font-size: 13px; color: #444; padding-left: 18px; margin: 0; }
-.inclusoes-list li { margin-bottom: 5px; }
-
-/* Modais */
+/* MODAIS */
 .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center; overflow-y: auto; }
 .modal-content { background-color: #fff; padding: 20px 30px; border-radius: 8px; width: 90%; max-width: 500px; position: relative; margin: 20px auto; }
 .fechar { position: absolute; right: 15px; top: 10px; font-size: 24px; font-weight: bold; color: #aaa; cursor: pointer; }
@@ -377,29 +363,29 @@ VALOR FINAL A COBRAR: <span id="totalComExtras">0</span> XOF
 const SENHA_CORRETA = "canafistra2026";
 
 function checarSessao() {
-if (sessionStorage.getItem("canafistra_autenticado") === "true") {
-document.getElementById("telaLogin").style.display = "none";
-}
+  if (sessionStorage.getItem("canafistra_autenticado") === "true") {
+    document.getElementById("telaLogin").style.display = "none";
+  }
 }
 
 function validarLogin(e) {
-e.preventDefault();
-const senhaInformada = document.getElementById("senhaInput").value;
-if (senhaInformada === SENHA_CORRETA) {
-sessionStorage.setItem("canafistra_autenticado", "true");
-document.getElementById("telaLogin").style.display = "none";
-document.getElementById("erroLogin").style.display = "none";
-document.getElementById("senhaInput").value = "";
-} else {
-document.getElementById("erroLogin").style.display = "block";
-}
+  e.preventDefault();
+  const senhaInformada = document.getElementById("senhaInput").value;
+  if (senhaInformada === SENHA_CORRETA) {
+    sessionStorage.setItem("canafistra_autenticado", "true");
+    document.getElementById("telaLogin").style.display = "none";
+    document.getElementById("erroLogin").style.display = "none";
+    document.getElementById("senhaInput").value = "";
+  } else {
+    document.getElementById("erroLogin").style.display = "block";
+  }
 }
 
 function fazerLogout() {
-if (confirm("Deseja sair do sistema?")) {
-sessionStorage.removeItem("canafistra_autenticado");
-document.getElementById("telaLogin").style.display = "flex";
-}
+  if (confirm("Deseja sair do sistema?")) {
+    sessionStorage.removeItem("canafistra_autenticado");
+    document.getElementById("telaLogin").style.display = "flex";
+  }
 }
 
 const SUPABASE_URL = 'https://vustjbadbbaluwbeuwhx.supabase.co';
@@ -407,12 +393,12 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const complexo = [
-{ nome: 'Suite Básica', unidades: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5', 'A-6', 'A-7', 'A-8', 'A-9', 'A-10'] },
-{ nome: 'Suite Executiva', unidades: ['TG1-1', 'TG1-2', 'TG1-3', 'TG1-4', 'TG1-5', 'TG1-6', 'TG1-7', 'TG1-8', 'TG1-9', 'TG1-10', 'TG2-1', 'TG2-2', 'TG2-3', 'TG2-4', 'TG2-5', 'TG2-6', 'TG2-7', 'TG2-8', 'TG2-9', 'TG2-10'] },
-{ nome: 'Suite Presidencial', unidades: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'] },
-{ nome: 'Casa dos Sete Quartos', unidades: ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'] },
-{ nome: 'Vilas', unidades: ['Vila-01', 'Vila-02', 'Vila-03', 'Vila-04'] },
-{ nome: 'Ilhas', unidades: ['Ilha A1', 'Ilha A2', 'Ilha B1', 'Ilha B2', 'Ilha C1', 'Ilha C2'] }
+  { nome: 'Suite Básica', unidades: ['A-1', 'A-2', 'A-3', 'A-4', 'A-5', 'A-6', 'A-7', 'A-8', 'A-9', 'A-10'] },
+  { nome: 'Suite Executiva', unidades: ['TG1-1', 'TG1-2', 'TG1-3', 'TG1-4', 'TG1-5', 'TG1-6', 'TG1-7', 'TG1-8', 'TG1-9', 'TG1-10', 'TG2-1', 'TG2-2', 'TG2-3', 'TG2-4', 'TG2-5', 'TG2-6', 'TG2-7', 'TG2-8', 'TG2-9', 'TG2-10'] },
+  { nome: 'Suite Presidencial', unidades: ['SP1', 'SP2', 'SP3', 'SP4', 'SP5'] },
+  { nome: 'Casa dos Sete Quartos', unidades: ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'] },
+  { nome: 'Vilas', unidades: ['Vila-01', 'Vila-02', 'Vila-03', 'Vila-04'] },
+  { nome: 'Ilhas', unidades: ['Ilha A1', 'Ilha A2', 'Ilha B1', 'Ilha B2', 'Ilha C1', 'Ilha C2'] }
 ];
 
 let nomeQuartoSelecionado = "";
@@ -426,293 +412,306 @@ window.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharModais
 window.addEventListener('click', (e) => { if (e.target.classList.contains('modal')) fecharModais(); });
 
 function fecharModais() {
-document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+  document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
 }
 
 function verificarFormaPagamento() {
-const forma = document.getElementById('formaPagamento').value;
-const areaRecibo = document.getElementById('areaRecibo');
-areaRecibo.style.display = (forma === 'Orange Money' || forma === 'Multibanco' || forma === 'Deposito Bancário') ? 'block' : 'none';
+  const forma = document.getElementById('formaPagamento').value;
+  const areaRecibo = document.getElementById('areaRecibo');
+  areaRecibo.style.display = (forma === 'Orange Money' || forma === 'Multibanco' || forma === 'Deposito Bancário') ? 'block' : 'none';
 }
 
 function gerarPDFRecibo(dados) {
-try {
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF();
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(20);
-doc.setTextColor(44, 62, 80);
-doc.text("CANAFISTRA RESORT", 105, 20, { align: "center" });
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(44, 62, 80);
+    doc.text("CANAFISTRA RESORT", 105, 20, { align: "center" });
 
-doc.setFont("helvetica", "normal");
-doc.setFontSize(9);
-doc.setTextColor(100);
-doc.text("Bigilim, Guiné-Bissau | Tel: +245 95 557 37 10 / 96 670 51 87", 105, 26, { align: "center" });
-doc.text("Email: canafistraresort@gmail.com", 105, 31, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(100);
+    doc.text("Bigilim, Guiné-Bissau | Tel: +245 95 557 37 10 / 96 670 51 87", 105, 26, { align: "center" });
+    doc.text("Email: canafistraresort@gmail.com", 105, 31, { align: "center" });
 
-doc.setDrawColor(200);
-doc.line(15, 36, 195, 36);
+    doc.setDrawColor(200);
+    doc.line(15, 36, 195, 36);
 
-doc.setFontSize(14);
-doc.setFont("helvetica", "bold");
-doc.setTextColor(22, 160, 133);
-doc.text("COMPROVANTE DE HOSPEDAGEM / RECIBO", 15, 46);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(22, 160, 133);
+    doc.text("COMPROVANTE DE HOSPEDAGEM / RECIBO", 15, 46);
 
-doc.setFontSize(11);
-doc.setFont("helvetica", "normal");
-doc.setTextColor(40);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(40);
 
-let dIn = dados.data_checkin ? dados.data_checkin.split('-').reverse().join('/') : '-';
-let dOut = dados.data_checkout ? dados.data_checkout.split('-').reverse().join('/') : '-';
+    let dIn = dados.data_checkin ? dados.data_checkin.split('-').reverse().join('/') : '-';
+    let dOut = dados.data_checkout ? dados.data_checkout.split('-').reverse().join('/') : '-';
 
-doc.text(Acomodação / Quarto: ${dados.quarto}, 15, 58); doc.text(Hóspede: ${dados.nome}, 15, 66);
-doc.text(Telefone: ${dados.telefone || 'Não informado'}, 15, 74); doc.text(Período da Estadia: ${dIn} até ${dOut}`, 15, 82);
+    doc.text(`Acomodação / Quarto: ${dados.quarto}`, 15, 58);
+    doc.text(`Hóspede: ${dados.nome}`, 15, 66);
+    doc.text(`Telefone: ${dados.telefone || 'Não informado'}`, 15, 74);
+    doc.text(`Período da Estadia: ${dIn} até ${dOut}`, 15, 82);
 
-doc.line(15, 90, 195, 90);
+    doc.line(15, 90, 195, 90);
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(12);
-doc.text("Resumo do Pagamento", 15, 102);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.text("Resumo do Pagamento", 15, 102);
 
-doc.setFont("helvetica", "normal");
-doc.setFontSize(11);
-doc.text(Forma de Pagamento:${dados.forma_pagamento}`, 15, 112);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text(`Forma de Pagamento: ${dados.forma_pagamento}`, 15, 112);
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(14);
-doc.setTextColor(192, 57, 43);
-doc.text(VALOR TOTAL PAGO: ${Number(dados.total_pago).toLocaleString('pt-GW')} XOF`, 15, 124);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.setTextColor(192, 57, 43);
+    doc.text(`VALOR TOTAL PAGO: ${Number(dados.total_pago).toLocaleString('pt-GW')} XOF`, 15, 124);
 
-doc.setDrawColor(230);
-doc.line(15, 140, 195, 140);
-doc.setFontSize(9);
-doc.setFont("helvetica", "italic");
-doc.setTextColor(120);
-doc.text(Recibo emitido automaticamente em${new Date().toLocaleString('pt-GW')}`, 15, 148);
-doc.text("Agradecemos pela sua preferência! Volte sempre ao Canafistra Resort.", 105, 160, { align: "center" });
+    doc.setDrawColor(230);
+    doc.line(15, 140, 195, 140);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "italic");
+    doc.setTextColor(120);
+    doc.text(`Recibo emitido automaticamente em ${new Date().toLocaleString('pt-GW')}`, 15, 148);
+    doc.text("Agradecemos pela sua preferência! Volte sempre ao Canafistra Resort.", 105, 160, { align: "center" });
 
-let nomeArquivo = Recibo_${dados.quarto}_${dados.nome.replace(/\s+/g, '_')}.pdf;
+    let nomeArquivo = `Recibo_${dados.quarto}_${dados.nome.replace(/\s+/g, '_')}.pdf`;
 
-const blob = doc.output('blob');
-const blobUrl = URL.createObjectURL(blob);
-const link = document.createElement('a');
-link.href = blobUrl;
-link.download = nomeArquivo;
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
-} catch (err) {
-alert("Erro ao gerar recibo: " + err.message);
-}
+    const blob = doc.output('blob');
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = nomeArquivo;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (err) {
+    alert("Erro ao gerar recibo: " + err.message);
+  }
 }
 
 async function fecharContaSemanal() {
-try {
-const hoje = new Date();
-const seteDiasAtras = new Date();
-seteDiasAtras.setDate(hoje.getDate() - 7);
+  try {
+    const hoje = new Date();
+    const seteDiasAtras = new Date();
+    seteDiasAtras.setDate(hoje.getDate() - 7);
 
-const dataFimStr = hoje.toISOString().split('T')[0];
-const dataInicioStr = seteDiasAtras.toISOString().split('T')[0];
+    const dataFimStr = hoje.toISOString().split('T')[0];
+    const dataInicioStr = seteDiasAtras.toISOString().split('T')[0];
 
-const { data: hist, error } = await _supabase
-.from('historico')
-.select('*')
-.gte('data_checkout', dataInicioStr)
-.lte('data_checkout', dataFimStr);
+    const { data: hist, error } = await _supabase
+      .from('historico')
+      .select('*')
+      .gte('data_checkout', dataInicioStr)
+      .lte('data_checkout', dataFimStr);
 
-if (error) return alert("Erro ao buscar dados da semana: " + error.message);
+    if (error) return alert("Erro ao buscar dados da semana: " + error.message);
 
-if (!hist || hist.length === 0) {
-return alert("Nenhum registro de check-out finalizado nos últimos 7 dias.");
-}
+    if (!hist || hist.length === 0) {
+      return alert("Nenhum registro de check-out finalizado nos últimos 7 dias.");
+    }
 
-let totalSemana = 0;
-let fin = { 'Cash': 0, 'Orange Money': 0, 'Multibanco': 0, 'Deposito Bancário': 0, 'Transferência Bancária': 0, 'Dívida': 0 };
+    let totalSemana = 0;
+    let fin = { 'Cash': 0, 'Orange Money': 0, 'Multibanco': 0, 'Deposito Bancário': 0, 'Transferência Bancária': 0, 'Dívida': 0 };
 
-hist.forEach(item => {
-let val = Number(item.total_pago) || 0;
-totalSemana += val;
-if (fin[item.forma_pagamento] !== undefined) {
-fin[item.forma_pagamento] += val;
-}
-});
+    hist.forEach(item => {
+      let val = Number(item.total_pago) || 0;
+      totalSemana += val;
+      if (fin[item.forma_pagamento] !== undefined) {
+        fin[item.forma_pagamento] += val;
+      }
+    });
 
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(20);
-doc.setTextColor(44, 62, 80);
-doc.text("CANAFISTRA RESORT", 105, 20, { align: "center" });
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.setTextColor(44, 62, 80);
+    doc.text("CANAFISTRA RESORT", 105, 20, { align: "center" });
 
-doc.setFont("helvetica", "normal");
-doc.setFontSize(9);
-doc.setTextColor(100);
-doc.text("Relatório Oficial de Fecho de Conta Semanal", 105, 26, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.setTextColor(100);
+    doc.text("Relatório Oficial de Fecho de Conta Semanal", 105, 26, { align: "center" });
 
-doc.setDrawColor(200);
-doc.line(15, 32, 195, 32);
+    doc.setDrawColor(200);
+    doc.line(15, 32, 195, 32);
 
-doc.setFontSize(12);
-doc.setFont("helvetica", "bold");
-doc.setTextColor(40);
-let dInFormatted = dataInicioStr.split('-').reverse().join('/');
-let dOutFormatted = dataFimStr.split('-').reverse().join('/');
-doc.text(Período do Fecho: ${dInFormatted} até ${dOutFormatted}, 15, 42);
-doc.text(Total de Atendimentos Concluídos: ${hist.length}`, 15, 50);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(40);
+    let dInFormatted = dataInicioStr.split('-').reverse().join('/');
+    let dOutFormatted = dataFimStr.split('-').reverse().join('/');
+    doc.text(`Período do Fecho: ${dInFormatted} até ${dOutFormatted}`, 15, 42);
+    doc.text(`Total de Atendimentos Concluídos: ${hist.length}`, 15, 50);
 
-doc.setFontSize(11);
-doc.text("Discriminação por Forma de Pagamento:", 15, 64);
-doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.text("Discriminação por Forma de Pagamento:", 15, 64);
+    doc.setFont("helvetica", "normal");
 
-doc.text(• Cash (Dinheiro):${fin['Cash'].toLocaleString('pt-GW')} XOF, 20, 74); doc.text(• Orange Money:  {fin['Multibanco'].toLocaleString('pt-GW')} XOF, 20, 90); doc.text(• Depósitos / Transferências:  {fin['Dívida'].toLocaleString('pt-GW')} XOF`, 20, 106);
+    doc.text(`• Cash (Dinheiro): ${fin['Cash'].toLocaleString('pt-GW')} XOF`, 20, 74);
+    doc.text(`• Orange Money: ${fin['Orange Money'].toLocaleString('pt-GW')} XOF`, 20, 82);
+    doc.text(`• Multibanco: ${fin['Multibanco'].toLocaleString('pt-GW')} XOF`, 20, 90);
+    doc.text(`• Depósitos / Transferências: ${(fin['Deposito Bancário'] + fin['Transferência Bancária']).toLocaleString('pt-GW')} XOF`, 20, 98);
+    doc.text(`• Dívida: ${fin['Dívida'].toLocaleString('pt-GW')} XOF`, 20, 106);
 
-doc.line(15, 115, 195, 115);
+    doc.line(15, 115, 195, 115);
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(15);
-doc.setTextColor(22, 160, 133);
-doc.text(RECEITA TOTAL DA SEMANA: ${totalSemana.toLocaleString('pt-GW')} XOF`, 15, 128);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(15);
+    doc.setTextColor(22, 160, 133);
+    doc.text(`RECEITA TOTAL DA SEMANA: ${totalSemana.toLocaleString('pt-GW')} XOF`, 15, 128);
 
-doc.setFontSize(9);
-doc.setFont("helvetica", "italic");
-doc.setTextColor(120);
-doc.text(Fecho de conta gerado em${new Date().toLocaleString('pt-GW')}`, 15, 145);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "italic");
+    doc.setTextColor(120);
+    doc.text(`Fecho de conta gerado em ${new Date().toLocaleString('pt-GW')}`, 15, 145);
 
-let nomeArquivoSemana = Fecho_Semanal_${dataInicioStr}a${dataFimStr}.pdf;
+    let nomeArquivoSemana = `Fecho_Semanal_${dataInicioStr}_a_${dataFimStr}.pdf`;
 
-const blob = doc.output('blob');
-const blobUrl = URL.createObjectURL(blob);
-const link = document.createElement('a');
-link.href = blobUrl;
-link.download = nomeArquivoSemana;
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
+    const blob = doc.output('blob');
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = nomeArquivoSemana;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-alert("Fecho de conta semanal realizado e PDF gerado com sucesso!");
-} catch (erro) {
-alert("Erro ao processar o fecho semanal: " + erro.message);
-}
+    alert("Fecho de conta semanal realizado e PDF gerado com sucesso!");
+  } catch (erro) {
+    alert("Erro ao processar o fecho semanal: " + erro.message);
+  }
 }
 
 function abrirModalAgendamento() {
-const select = document.getElementById('quartoAgendamento');
-select.innerHTML = '<option value="">Selecione um Quarto...</option>';
-complexo.forEach(cat => {
-const optgroup = document.createElement('optgroup');
-optgroup.label = cat.nome;
-cat.unidades.forEach(un => {
-const option = document.createElement('option');
-option.value = un;
-option.text = un;
-optgroup.appendChild(option);
-});
-select.appendChild(optgroup);
-});
-document.getElementById('modalAgendamento').style.display = 'flex';
+  const select = document.getElementById('quartoAgendamento');
+  select.innerHTML = '<option value="">Selecione um Quarto...</option>';
+  complexo.forEach(cat => {
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = cat.nome;
+    cat.unidades.forEach(un => {
+      const option = document.createElement('option');
+      option.value = un;
+      option.text = un;
+      optgroup.appendChild(option);
+    });
+    select.appendChild(optgroup);
+  });
+  document.getElementById('modalAgendamento').style.display = 'flex';
 }
 
 function fecharModalAgendamento() {
-document.getElementById('modalAgendamento').style.display = 'none';
-document.getElementById('formAgendamento').reset();
+  document.getElementById('modalAgendamento').style.display = 'none';
+  document.getElementById('formAgendamento').reset();
 }
 
 document.getElementById('formAgendamento').addEventListener('submit', async (e) => {
-e.preventDefault();
-const novoAgendamento = {
-quarto: document.getElementById('quartoAgendamento').value,
-nome: document.getElementById('nomeAg').value,
-telefone: document.getElementById('telefoneAg').value,
-data_checkin: document.getElementById('dataCheckinAg').value,
-data_checkout: document.getElementById('dataCheckoutAg').value,
-sinal: Number(document.getElementById('sinalAg').value) || 0
-};
+  e.preventDefault();
+  const novoAgendamento = {
+    quarto: document.getElementById('quartoAgendamento').value,
+    nome: document.getElementById('nomeAg').value,
+    telefone: document.getElementById('telefoneAg').value,
+    data_checkin: document.getElementById('dataCheckinAg').value,
+    data_checkout: document.getElementById('dataCheckoutAg').value,
+    sinal: Number(document.getElementById('sinalAg').value) || 0
+  };
 
-const { error } = await _supabase.from('agendamentos').insert([novoAgendamento]);
-if (error) return alert("Erro ao salvar agendamento: " + error.message);
+  const { error } = await _supabase.from('agendamentos').insert([novoAgendamento]);
+  if (error) return alert("Erro ao salvar agendamento: " + error.message);
 
-fecharModalAgendamento();
-atualizarTabelaAgendamentos();
-alert("Reserva Agendada!");
+  fecharModalAgendamento();
+  atualizarTabelaAgendamentos();
+  alert("Reserva Agendada!");
 });
 
 async function atualizarTabelaAgendamentos() {
-const corpo = document.getElementById('corpoAgendamentos');
-const { data: reservas, error } = await _supabase.from('agendamentos').select('*').order('data_checkin', { ascending: true });
+  const corpo = document.getElementById('corpoAgendamentos');
+  const { data: reservas, error } = await _supabase.from('agendamentos').select('*').order('data_checkin', { ascending: true });
 
-if (error) return console.error(error);
-cacheAgendamentos = reservas || [];
-corpo.innerHTML = "";
+  if (error) return console.error(error);
+  cacheAgendamentos = reservas || [];
+  corpo.innerHTML = "";
 
-if (cacheAgendamentos.length === 0) {
-corpo.innerHTML = <tr&gt;&lt;td colspan="6" style="text-align: center; color: #7f8c8d;"&gt;Nenhuma reserva futura agendada.&lt;/td&gt;&lt;/tr>;
-return;
-}
+  if (cacheAgendamentos.length === 0) {
+    corpo.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #7f8c8d;">Nenhuma reserva futura agendada.</td></tr>`;
+    return;
+  }
 
-cacheAgendamentos.forEach((res) => {
-let dIn = res.data_checkin ? res.data_checkin.split('-').reverse().join('/') : '-';
-let dOut = res.data_checkout ? res.data_checkout.split('-').reverse().join('/') : '-';
-corpo.innerHTML += <tr&gt; &lt;td&gt;&lt;strong&gt;${res.quarto}</strong></td>
-<td>${res.nome}&lt;br&gt;&lt;small&gt;${res.telefone}</small></td>
-<td>${dIn}&lt;/td&gt; &lt;td&gt;${dOut}</td>
-<td>${Number(res.sinal).toLocaleString('pt-GW')} XOF&lt;/td&gt; &lt;td&gt; &lt;button class="bg-verde" onclick="prepararCheckinAgendado(${res.id})">✔</button>
-<button class="btn-remover" onclick="removerAgendamento(${res.id})"&gt;X&lt;/button&gt; &lt;/td&gt; &lt;/tr>;
-});
+  cacheAgendamentos.forEach((res) => {
+    let dIn = res.data_checkin ? res.data_checkin.split('-').reverse().join('/') : '-';
+    let dOut = res.data_checkout ? res.data_checkout.split('-').reverse().join('/') : '-';
+    corpo.innerHTML += `<tr>
+      <td><strong>${res.quarto}</strong></td>
+      <td>${res.nome}<br><small>${res.telefone}</small></td>
+      <td>${dIn}</td>
+      <td>${dOut}</td>
+      <td>${Number(res.sinal).toLocaleString('pt-GW')} XOF</td>
+      <td>
+        <button class="bg-verde" onclick="prepararCheckinAgendado(${res.id})">✔</button>
+        <button class="btn-remover" onclick="removerAgendamento(${res.id})">X</button>
+      </td>
+    </tr>`;
+  });
 }
 
 async function removerAgendamento(id) {
-if (confirm("Cancelar reserva?")) {
-const { error } = await _supabase.from('agendamentos').delete().eq('id', id);
-if (error) alert("Erro ao remover: " + error.message);
-else atualizarTabelaAgendamentos();
-}
+  if (confirm("Cancelar reserva?")) {
+    const { error } = await _supabase.from('agendamentos').delete().eq('id', id);
+    if (error) alert("Erro ao remover: " + error.message);
+    else atualizarTabelaAgendamentos();
+  }
 }
 
 function prepararCheckinAgendado(id) {
-const res = cacheAgendamentos.find(item => item.id === id);
-if (!res) return;
+  const res = cacheAgendamentos.find(item => item.id === id);
+  if (!res) return;
 
-if (cacheQuartos[res.quarto] && cacheQuartos[res.quarto].status !== 'status-livre') {
-return alert("Quarto ocupado ou em limpeza!");
-}
+  if (cacheQuartos[res.quarto] && cacheQuartos[res.quarto].status !== 'status-livre') {
+    return alert("Quarto ocupado ou em limpeza!");
+  }
 
-nomeQuartoSelecionado = res.quarto;
-agendamentoParaEfetivarId = id;
-document.getElementById('tituloModal').innerText = Check-in Agendado: ${res.quarto}`;
-document.getElementById('nome').value = res.nome;
-document.getElementById('telefone').value = res.telefone;
-document.getElementById('dataCheckin').value = res.data_checkin;
-document.getElementById('dataCheckout').value = res.data_checkout;
-document.getElementById('valorDiaria').value = "";
-calcularTotalEstadia();
+  nomeQuartoSelecionado = res.quarto;
+  agendamentoParaEfetivarId = id;
+  document.getElementById('tituloModal').innerText = `Check-in Agendado: ${res.quarto}`;
+  document.getElementById('nome').value = res.nome;
+  document.getElementById('telefone').value = res.telefone;
+  document.getElementById('dataCheckin').value = res.data_checkin;
+  document.getElementById('dataCheckout').value = res.data_checkout;
+  document.getElementById('valorDiaria').value = "";
+  calcularTotalEstadia();
 
-const sinal = Number(res.sinal) || 0;
-document.getElementById('alertaReserva').style.display = 'block';
-document.getElementById('alertaReserva').innerText = sinal > 0
-? ⚠️ Sinal Antecipado:${sinal.toLocaleString('pt-GW')} XOF (Considere este valor no acerto).:⚠️ Reserva confirmada sem sinal pago.`;
+  const sinal = Number(res.sinal) || 0;
+  document.getElementById('alertaReserva').style.display = 'block';
+  document.getElementById('alertaReserva').innerText = sinal > 0
+    ? `⚠️ Sinal Antecipado: ${sinal.toLocaleString('pt-GW')} XOF (Considere este valor no acerto).`
+    : `⚠️ Reserva confirmada sem sinal pago.`;
 
-document.getElementById('modalReserva').style.display = 'flex';
+  document.getElementById('modalReserva').style.display = 'flex';
 }
 
 function calcularTotalEstadia() {
-const entradaVal = document.getElementById('dataCheckin').value;
-const saidaVal = document.getElementById('dataCheckout').value;
-const diaria = Number(document.getElementById('valorDiaria').value) || 0;
+  const entradaVal = document.getElementById('dataCheckin').value;
+  const saidaVal = document.getElementById('dataCheckout').value;
+  const diaria = Number(document.getElementById('valorDiaria').value) || 0;
 
-if (entradaVal && saidaVal) {
-const dEntrada = new Date(entradaVal + 'T00:00:00');
-const dSaida = new Date(saidaVal + 'T00:00:00');
-let noites = Math.ceil((dSaida - dEntrada) / (1000 * 3600 * 24));
-if (noites <= 0) noites = 1;
+  if (entradaVal && saidaVal) {
+    const dEntrada = new Date(entradaVal + 'T00:00:00');
+    const dSaida = new Date(saidaVal + 'T00:00:00');
+    let noites = Math.ceil((dSaida - dEntrada) / (1000 * 3600 * 24));
+    if (noites <= 0) noites = 1;
 
-const totalCalculado = noites * diaria;
-document.getElementById('totalNoites').value = noites;
-document.getElementById('displayTotal').innerText = totalCalculado.toLocaleString('pt-GW');
-document.getElementById('valorTotalFinal').value = totalCalculado;
-}
+    const totalCalculado = noites * diaria;
+    document.getElementById('totalNoites').value = noites;
+    document.getElementById('displayTotal').innerText = totalCalculado.toLocaleString('pt-GW');
+    document.getElementById('valorTotalFinal').value = totalCalculado;
+  }
 }
 
 document.getElementById('dataCheckin').addEventListener('change', calcularTotalEstadia);
@@ -720,196 +719,278 @@ document.getElementById('dataCheckout').addEventListener('change', calcularTotal
 document.getElementById('valorDiaria').addEventListener('input', calcularTotalEstadia);
 
 function buscarHospede() {
-const termo = document.getElementById('campoBusca').value.toLowerCase();
-const cx = document.getElementById('resultadosBusca');
-cx.innerHTML = "";
-if (termo.length < 2) { cx.style.display = "none"; return; }
-let encontrou = false;
+  const termo = document.getElementById('campoBusca').value.toLowerCase();
+  const cx = document.getElementById('resultadosBusca');
+  cx.innerHTML = "";
+  if (termo.length < 2) { cx.style.display = "none"; return; }
+  let encontrou = false;
 
-for (let un in cacheQuartos) {
-let item = cacheQuartos[un];
-if (item.status === 'status-ocupado' && item.hospede && (item.hospede.nome.toLowerCase().includes(termo) || item.hospede.telefone.includes(termo))) {
-encontrou = true;
-const div = document.createElement('div');
-div.className = 'resultado-item';
-div.innerHTML = <span class="resultado-nome"&gt;${item.hospede.nome}</span> <span class="resultado-quarto">Q. ${un}&lt;/span>;
-div.onclick = () => { abrirDetalhesQuarto(un); cx.style.display = "none"; };
-cx.appendChild(div);
-}
-}
-if (!encontrou) cx.innerHTML = "<div class='resultado-item'>Não encontrado.</div>";
-cx.style.display = "block";
+  for (let un in cacheQuartos) {
+    let item = cacheQuartos[un];
+    if (item.status === 'status-ocupado' && item.hospede && (item.hospede.nome.toLowerCase().includes(termo) || item.hospede.telefone.includes(termo))) {
+      encontrou = true;
+      const div = document.createElement('div');
+      div.className = 'resultado-item';
+      div.innerHTML = `<span class="resultado-nome">${item.hospede.nome}</span> <span class="resultado-quarto">Q. ${un}</span>`;
+      div.onclick = () => { abrirDetalhesQuarto(un); cx.style.display = "none"; };
+      cx.appendChild(div);
+    }
+  }
+  if (!encontrou) cx.innerHTML = "<div class='resultado-item'>Não encontrado.</div>";
+  cx.style.display = "block";
 }
 
 async function calcularEstatisticas() {
-let oc = 0, lim = 0, tot = 0;
-let fin = { 'Cash': 0, 'Orange Money': 0, 'Multibanco': 0, 'Deposito Bancário': 0, 'Transferência Bancária': 0 };
-let totalDivida = 0;
+  let oc = 0, lim = 0, tot = 0;
+  let fin = { 'Cash': 0, 'Orange Money': 0, 'Multibanco': 0, 'Deposito Bancário': 0, 'Transferência Bancária': 0 };
+  let totalDivida = 0;
 
-const { data: hist } = await _supabase.from('historico').select('total_pago, forma_pagamento');
-if (hist) {
-hist.forEach(h => {
-let f = h.forma_pagamento;
-let v = Number(h.total_pago) || 0;
-if (fin[f] !== undefined) fin[f] += v;
-});
-}
+  const { data: hist } = await _supabase.from('historico').select('total_pago, forma_pagamento');
+  if (hist) {
+    hist.forEach(h => {
+      let f = h.forma_pagamento;
+      let v = Number(h.total_pago) || 0;
+      if (fin[f] !== undefined) fin[f] += v;
+    });
+  }
 
-complexo.forEach(cat => {
-tot += cat.unidades.length;
-cat.unidades.forEach(un => {
-let st = cacheQuartos[un] ? cacheQuartos[un].status : 'status-livre';
-if (st === 'status-ocupado') {
-oc++;
-let h = cacheQuartos[un].hospede;
-if (h) {
-let v = Number(h.valorFinalAcumulado) || Number(h.valorTotal) || 0;
-if (h.formaPagamento === 'Dívida') {
-totalDivida += v;
-} else if (h.statusPagamento === 'Pago') {
-let f = h.formaPagamento;
-if(fin[f] !== undefined) fin[f] += v;
-}
-}
-} else if (st === 'status-limpeza') lim++;
-});
-});
+  complexo.forEach(cat => {
+    tot += cat.unidades.length;
+    cat.unidades.forEach(un => {
+      let st = cacheQuartos[un] ? cacheQuartos[un].status : 'status-livre';
+      if (st === 'status-ocupado') {
+        oc++;
+        let h = cacheQuartos[un].hospede;
+        if (h) {
+          let v = Number(h.valorFinalAcumulado) || Number(h.valorTotal) || 0;
+          if (h.formaPagamento === 'Dívida') {
+            totalDivida += v;
+          } else if (h.statusPagamento === 'Pago') {
+            let f = h.formaPagamento;
+            if(fin[f] !== undefined) fin[f] += v;
+          }
+        }
+      } else if (st === 'status-limpeza') lim++;
+    });
+  });
 
-document.getElementById('resLivres').innerText = tot - oc - lim;
-document.getElementById('resOcupados').innerText = oc;
-document.getElementById('resLimpeza').innerText = lim;
-document.getElementById('resTotalQuartos').innerText = tot;
+  document.getElementById('resLivres').innerText = tot - oc - lim;
+  document.getElementById('resOcupados').innerText = oc;
+  document.getElementById('resLimpeza').innerText = lim;
+  document.getElementById('resTotalQuartos').innerText = tot;
 
-let rec = fin['Cash'] + fin['Orange Money'] + fin['Multibanco'] + fin['Deposito Bancário'] + fin['Transferência Bancária'];
-document.getElementById('resTotalDinheiro').innerText = rec.toLocaleString('pt-GW') + " XOF";
-document.getElementById('resCash').innerText = fin['Cash'].toLocaleString('pt-GW');
-document.getElementById('resOrange').innerText = fin['Orange Money'].toLocaleString('pt-GW');
-document.getElementById('resMultibanco').innerText = fin['Multibanco'].toLocaleString('pt-GW');
-document.getElementById('resDeposito').innerText = (fin['Deposito Bancário'] + fin['Transferência Bancária']).toLocaleString('pt-GW');
-document.getElementById('resDivida').innerText = totalDivida.toLocaleString('pt-GW') + " XOF";
+  let rec = fin['Cash'] + fin['Orange Money'] + fin['Multibanco'] + fin['Deposito Bancário'] + fin['Transferência Bancária'];
+  document.getElementById('resTotalDinheiro').innerText = rec.toLocaleString('pt-GW') + " XOF";
+  document.getElementById('resCash').innerText = fin['Cash'].toLocaleString('pt-GW');
+  document.getElementById('resOrange').innerText = fin['Orange Money'].toLocaleString('pt-GW');
+  document.getElementById('resMultibanco').innerText = fin['Multibanco'].toLocaleString('pt-GW');
+  document.getElementById('resDeposito').innerText = (fin['Deposito Bancário'] + fin['Transferência Bancária']).toLocaleString('pt-GW');
+  document.getElementById('resDivida').innerText = totalDivida.toLocaleString('pt-GW') + " XOF";
 }
 
 async function montarPainel() {
-const { data, error } = await _supabase.from('quartos_status').select('*');
-if (!error && data) {
-cacheQuartos = {};
-data.forEach(q => { cacheQuartos[q.quarto] = q; });
-}
+  const { data, error } = await _supabase.from('quartos_status').select('*');
+  if (!error && data) {
+    cacheQuartos = {};
+    data.forEach(q => { cacheQuartos[q.quarto] = q; });
+  }
 
-const container = document.getElementById('dashboard');
-container.innerHTML = '';
+  const container = document.getElementById('dashboard');
+  container.innerHTML = '';
 
-complexo.forEach(cat => {
-const catDiv = document.createElement('div');
-catDiv.className = 'categoria';
-catDiv.innerHTML = <h2&gt;${cat.nome}</h2>`;
+  complexo.forEach(cat => {
+    const catDiv = document.createElement('div');
+    catDiv.className = 'categoria';
+    catDiv.innerHTML = `<h2>${cat.nome}</h2>`;
 
-const grid = document.createElement('div');
-grid.className = 'grid-quartos';
+    const grid = document.createElement('div');
+    grid.className = 'grid-quartos';
 
-cat.unidades.forEach(un => {
-const info = cacheQuartos[un] || { status: 'status-livre' };
-const qDiv = document.createElement('div');
-qDiv.className = quarto${info.status || 'status-livre'}`;
-qDiv.innerText = un;
-qDiv.onclick = () => clicarQuarto(un);
-grid.appendChild(qDiv);
-});
+    cat.unidades.forEach(un => {
+      const info = cacheQuartos[un] || { status: 'status-livre' };
+      const qDiv = document.createElement('div');
+      qDiv.className = `quarto ${info.status || 'status-livre'}`;
+      qDiv.innerText = un;
+      qDiv.onclick = () => clicarQuarto(un);
+      grid.appendChild(qDiv);
+    });
 
-catDiv.appendChild(grid);
-container.appendChild(catDiv);
-});
+    catDiv.appendChild(grid);
+    container.appendChild(catDiv);
+  });
 
-calcularEstatisticas();
-atualizarTabelaAgendamentos();
-atualizarTabelaHistorico();
+  calcularEstatisticas();
+  atualizarTabelaAgendamentos();
+  atualizarTabelaHistorico();
 }
 
 function clicarQuarto(un) {
-nomeQuartoSelecionado = un;
-const info = cacheQuartos[un] || { status: 'status-livre' };
+  nomeQuartoSelecionado = un;
+  const info = cacheQuartos[un] || { status: 'status-livre' };
 
-if (info.status === 'status-livre' || !info.status) {
-agendamentoParaEfetivarId = null;
-document.getElementById('tituloModal').innerText = Check-in: Quarto ${un}; document.getElementById('alertaReserva').style.display = 'none'; document.getElementById('formCheckin').reset(); document.getElementById('modalReserva').style.display = 'flex'; } else if (info.status === 'status-ocupado') { abrirDetalhesQuarto(un); } else if (info.status === 'status-limpeza') { if (confirm(Liberar quarto ${un} da limpeza?)) {
-_supabase.from('quartos_status').upsert([{ quarto: un, status: 'status-livre', hospede: null }], { onConflict: 'quarto' }).then(() => montarPainel());
-}
-}
+  if (info.status === 'status-livre' || !info.status) {
+    agendamentoParaEfetivarId = null;
+    document.getElementById('tituloModal').innerText = `Check-in: Quarto ${un}`;
+    document.getElementById('alertaReserva').style.display = 'none';
+    document.getElementById('formCheckin').reset();
+    document.getElementById('modalReserva').style.display = 'flex';
+  } else if (info.status === 'status-ocupado') {
+    abrirDetalhesQuarto(un);
+  } else if (info.status === 'status-limpeza') {
+    if (confirm(`Liberar quarto ${un} da limpeza?`)) {
+      _supabase.from('quartos_status').upsert([{ quarto: un, status: 'status-livre', hospede: null }], { onConflict: 'quarto' }).then(() => montarPainel());
+    }
+  }
 }
 
 function abrirDetalhesQuarto(un) {
-nomeQuartoSelecionado = un;
-const item = cacheQuartos[un];
-if (!item || !item.hospede) return;
+  nomeQuartoSelecionado = un;
+  const item = cacheQuartos[un];
+  if (!item || !item.hospede) return;
 
-const h = item.hospede;
-document.getElementById('tituloModalDetalhes').innerText = Ocupado: Quarto ${un}; document.getElementById('conteudoDetalhes').innerHTML =
-<div class="detalhe-item"><strong>Hóspede:</strong> ${h.nome}&lt;/div&gt; &lt;div class="detalhe-item"&gt;&lt;strong&gt;Telefone:&lt;/strong&gt; ${h.telefone}</div>
-<div class="detalhe-item"><strong>Entrada:</strong> ${h.dataCheckin} | &lt;strong&gt;Saída:&lt;/strong&gt; ${h.dataCheckout}</div>
-<div class="detalhe-item"><strong>Pagamento:</strong> ${h.formaPagamento} (${h.statusPagamento})</div>
-`;
+  const h = item.hospede;
+  document.getElementById('tituloModalDetalhes').innerText = `Ocupado: Quarto ${un}`;
+  document.getElementById('conteudoDetalhes').innerHTML = `
+    <div class="detalhe-item"><strong>Hóspede:</strong> ${h.nome}</div>
+    <div class="detalhe-item"><strong>Telefone:</strong> ${h.telefone}</div>
+    <div class="detalhe-item"><strong>Entrada:</strong> ${h.dataCheckin} | <strong>Saída:</strong> ${h.dataCheckout}</div>
+    <div class="detalhe-item"><strong>Pagamento:</strong> ${h.formaPagamento} (${h.statusPagamento})</div>
+  `;
 
-document.getElementById('btnFazerCheckout').onclick = () => {
-fecharModais();
-abrirModalCheckoutPagamento(un);
-};
+  document.getElementById('btnFazerCheckout').onclick = () => {
+    fecharModais();
+    abrirModalCheckoutPagamento(un);
+  };
 
-document.getElementById('modalDetalhes').style.display = 'flex';
+  document.getElementById('modalDetalhes').style.display = 'flex';
 }
 
 function abrirModalCheckoutPagamento(un) {
-const item = cacheQuartos[un];
-if (!item || !item.hospede) return;
+  const item = cacheQuartos[un];
+  if (!item || !item.hospede) return;
 
-let total = Number(item.hospede.valorTotal) || 0;
-document.getElementById('displayTotalCheckout').innerText = total.toLocaleString('pt-GW');
-document.getElementById('modalCheckoutPagamento').style.display = 'flex';
+  let total = Number(item.hospede.valorTotal) || 0;
+  document.getElementById('displayTotalCheckout').innerText = total.toLocaleString('pt-GW');
+  document.getElementById('modalCheckoutPagamento').style.display = 'flex';
 
-document.getElementById('formCheckoutPagamento').onsubmit = async (e) => {
-e.preventDefault();
-const forma = document.getElementById('formaPagamentoCheckout').value;
+  document.getElementById('formCheckoutPagamento').onsubmit = async (e) => {
+    e.preventDefault();
+    const forma = document.getElementById('formaPagamentoCheckout').value;
 
-const registroHistorico = {
-quarto: un,
-nome: item.hospede.nome,
-telefone: item.hospede.telefone,
-data_checkin: item.hospede.dataCheckin,
-data_checkout: new Date().toISOString().split('T')[0],
-total_pago: total,
-forma_pagamento: forma
-};
+    const registroHistorico = {
+      quarto: un,
+      nome: item.hospede.nome,
+      telefone: item.hospede.telefone,
+      data_checkin: item.hospede.dataCheckin,
+      data_checkout: new Date().toISOString().split('T')[0],
+      total_pago: total,
+      forma_pagamento: forma
+    };
 
-await _supabase.from('historico').insert([registroHistorico]);
-await _supabase.from('quartos_status').upsert([{ quarto: un, status: 'status-limpeza', hospede: null }], { onConflict: 'quarto' });
+    await _supabase.from('historico').insert([registroHistorico]);
+    await _supabase.from('quartos_status').upsert([{ quarto: un, status: 'status-limpeza', hospede: null }], { onConflict: 'quarto' });
 
-fecharModais();
-montarPainel();
-gerarPDFRecibo(registroHistorico);
-alert("Check-out realizado com sucesso!");
-};
+    fecharModais();
+    montarPainel();
+    gerarPDFRecibo(registroHistorico);
+    alert("Check-out realizado com sucesso!");
+  };
 }
 
 document.getElementById('formCheckin').addEventListener('submit', async (e) => {
-e.preventDefault();
-const novoStatus = {
-quarto: nomeQuartoSelecionado,
-status: 'status-ocupado',
-hospede: {
-nome: document.getElementById('nome').value,
-telefone: document.getElementById('telefone').value,
-dataCheckin: document.getElementById('dataCheckin').value,
-dataCheckout: document.getElementById('dataCheckout').value,
-valorDiaria: document.getElementById('valorDiaria').value,
-totalNoites: document.getElementById('totalNoites').value,
-valorTotal: document.getElementById('valorTotalFinal').value,
-statusPagamento: document.getElementById('statusPagamento').value,
-formaPagamento: document.getElementById('formaPagamento').value,
-recibo: document.getElementById('reciboPagamento').value
+  e.preventDefault();
+  const novoStatus = {
+    quarto: nomeQuartoSelecionado,
+    status: 'status-ocupado',
+    hospede: {
+      nome: document.getElementById('nome').value,
+      telefone: document.getElementById('telefone').value,
+      dataCheckin: document.getElementById('dataCheckin').value,
+      dataCheckout: document.getElementById('dataCheckout').value,
+      valorDiaria: document.getElementById('valorDiaria').value,
+      totalNoites: document.getElementById('totalNoites').value,
+      valorTotal: document.getElementById('valorTotalFinal').value,
+      statusPagamento: document.getElementById('statusPagamento').value,
+      formaPagamento: document.getElementById('formaPagamento').value,
+      recibo: document.getElementById('reciboPagamento').value
+    }
+  };
+
+  const { error } = await _supabase.from('quartos_status').upsert([novoStatus], { onConflict: 'quarto' });
+  if (error) return alert("Erro no check-in: " + error.message);
+
+  if (agendamentoParaEfetivarId) {
+    await _supabase.from('agendamentos').delete().eq('id', agendamentoParaEfetivarId);
+    agendamentoParaEfetivarId = null;
+  }
+
+  fecharModais();
+  montarPainel();
+  alert("Check-in realizado com sucesso!");
+});
+
+async function atualizarTabelaHistorico() {
+  const corpo = document.getElementById('corpoTabelaHistorico');
+  const { data: hist, error } = await _supabase.from('historico').select('*').order('data_checkout', { ascending: false });
+
+  if (error) return console.error(error);
+  cacheHistorico = hist || [];
+  corpo.innerHTML = "";
+
+  if (cacheHistorico.length === 0) {
+    corpo.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #7f8c8d;">Nenhum registro no histórico.</td></tr>`;
+    return;
+  }
+
+  cacheHistorico.forEach((item) => {
+    let dIn = item.data_checkin ? item.data_checkin.split('-').reverse().join('/') : '-';
+    let dOut = item.data_checkout ? item.data_checkout.split('-').reverse().join('/') : '-';
+    corpo.innerHTML += `<tr>
+      <td><strong>${item.quarto}</strong></td>
+      <td>${item.nome}<br><small>${item.telefone || ''}</small></td>
+      <td>${dIn} até ${dOut}</td>
+      <td>${Number(item.total_pago).toLocaleString('pt-GW')} XOF</td>
+      <td>${item.forma_pagamento}</td>
+      <td><button class="btn-acao bg-azul" style="padding: 4px 8px; font-size: 12px;" onclick='gerarPDFRecibo(${JSON.stringify(item)})'>📄 Recibo</button></td>
+    </tr>`;
+  });
 }
+
+function registrarConsumo() {
+  const desc = document.getElementById('descConsumo').value;
+  const val = Number(document.getElementById('valorConsumo').value) || 0;
+  if (!desc || val <= 0) return alert("Preencha a descrição e o valor do consumo.");
+
+  alert(`Consumo de "${desc}" no valor de ${val.toLocaleString('pt-GW')} XOF registrado.`);
+  document.getElementById('descConsumo').value = "";
+  document.getElementById('valorConsumo').value = "";
+}
+
+function exportarCSV() {
+  if (cacheHistorico.length === 0) return alert("Sem dados para exportar.");
+  let csv = "Quarto,Hospede,Telefone,Checkin,Checkout,Total,FormaPagamento\n";
+  cacheHistorico.forEach(h => {
+    csv += `"${h.quarto}","${h.nome}","${h.telefone || ''}","${h.data_checkin}","${h.data_checkout}","${h.total_pago}","${h.forma_pagamento}"\n`;
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `historico_checkouts_${new Date().toISOString().split('T')[0]}.csv`;
+  link.click();
+}
+
+async function limparHistorico() {
+  if (confirm("Tem certeza que deseja apagar todo o histórico de check-outs?")) {
+    const { error } = await _supabase.from('historico').delete().neq('id', 0);
+    if (error) alert("Erro ao limpar histórico: " + error.message);
+    else montarPainel();
+  }
+}
+
+window.onload = () => {
+  checarSessao();
+  montarPainel();
 };
-
-const { error } = await _supabase.from('quartos_status').upsert([novoStatus], { onConflict: 'quarto' });
-if (error) return alert("Erro no check-in: " + error.message);
-
-if (agendamentoParaEfetivarId) {
-await _supabase.
+</script>
+</body>
+</html>
