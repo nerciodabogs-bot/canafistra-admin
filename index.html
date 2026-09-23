@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -13,95 +14,576 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 12px; }
-        
+        :root {
+            --canafistra-gold: #CBA135;
+            --canafistra-blue: #16447C;
+            --canafistra-dark: #0a0c10;
+            --bg-light: #f4f6f9;
+            --text-dark: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding: 12px;
+            line-height: 1.4;
+        }
+
         /* TELA DE LOGIN OVERLAY */
-        .modal-login { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); display: flex; align-items: center; justify-content: center; z-index: 10000; }
-        .login-card { background: white; padding: 30px 25px; border-radius: 12px; text-align: center; max-width: 360px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .login-card h3 { margin: 0 0 5px 0; color: #2c3e50; font-size: 20px; }
-        .login-card p { color: #666; font-size: 13px; margin-bottom: 20px; }
-        .login-card input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; text-align: center; font-size: 16px; font-weight: bold; }
-        .login-card button { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        
+        .modal-login {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f4f6f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .login-card {
+            background: #ffffff; /* Fundo do login alterado para branco */
+            border: 1px solid #e2e8f0;
+            padding: 35px 25px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 380px;
+            width: 92%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .login-card h3 {
+            margin: 15px 0 5px 0;
+            color: var(--canafistra-blue);
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .login-card p {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: #1e293b;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            outline: none;
+        }
+
+        .login-card input:focus {
+            border-color: var(--canafistra-gold);
+            background: #ffffff;
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--canafistra-gold);
+            color: #000000;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-card button:hover {
+            background-color: #e0b642;
+        }
+
         /* CONTEÚDO PRINCIPAL */
-        .main-content { display: none; }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-        .actions-container { display: flex; gap: 6px; flex-wrap: wrap; }
-        .btn-action { padding: 9px 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: white; font-size: 12px; display: inline-flex; align-items: center; gap: 5px; }
-        .btn-orange { background-color: #e67e22; }
-        .btn-blue { background-color: #3498db; }
-        .btn-green { background-color: #27ae60; }
-        .btn-purple { background-color: #8e44ad; }
-        .btn-red { background-color: #e74c3c; }
-        .btn-gray { background-color: #7f8c8d; }
+        .main-content {
+            display: none;
+            max-width: 680px;
+            margin: 0 auto;
+        }
 
-        /* DASHBOARDS/CARDS */
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 15px; }
-        .card { background: white; padding: 16px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-        .card h3 { margin-top: 0; color: #34495e; font-size: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        
-        .status-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center; margin-top: 10px; }
-        .status-box { padding: 8px; border-radius: 6px; background: #f8f9fa; border: 1px solid #edf2f7; }
-        .status-box span { font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        .status-box .num { font-size: 20px; font-weight: bold; margin-top: 2px; }
-        
-        /* PAINEL FINANCEIRO DA RECEITA */
-        .finance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; text-align: center; }
-        .finance-box { background: #f8f9fa; padding: 8px; border-radius: 6px; font-size: 12px; }
-        .finance-box strong { display: block; font-size: 15px; color: #2c3e50; margin-top: 2px; }
-        .total-box { background: #e8f8f5; border: 1px solid #a3e4d7; padding: 10px; border-radius: 8px; text-align: center; margin-top: 8px; }
-        .total-box .amount { font-size: 22px; font-weight: bold; color: #27ae60; }
+        /* CABEÇALHO BRANCO INTEGRADO AO LOGÓTIPO */
+        .header-container {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 20px 15px;
+            text-align: center;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
 
-        /* LEGENDAS DE CORES */
-        .legend { display: flex; gap: 10px; margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; flex-wrap: wrap; justify-content: center; font-size: 12px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
-        .legend-item { display: flex; align-items: center; gap: 5px; }
-        .color-box { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+        .logo-canafistra {
+            max-width: 240px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto 10px auto;
+            display: block;
+            object-fit: contain;
+        }
 
-        /* CORES DE STATUS */
-        .bg-livre { background-color: #a2e2ab !important; color: #1e5625; }
-        .bg-ocupado { background-color: #f5a3a3 !important; color: #721c24; }
-        .bg-limpeza { background-color: #fef0a5 !important; color: #856404; }
-        .bg-manutencao { background-color: #6c7a89 !important; color: white; }
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+
+        .title-row h1 {
+            color: var(--canafistra-gold);
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .role-badge {
+            background-color: var(--canafistra-blue);
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* BARRA DE PESQUISA OVAL (PILL) */
+        .busca-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        #campoBusca {
+            width: 100%;
+            max-width: 450px;
+            padding: 12px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 25px;
+            font-size: 13px;
+            outline: none;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+            color: #334155;
+        }
+
+        #campoBusca:focus {
+            border-color: var(--canafistra-blue);
+        }
+
+        /* BOTÕES DE AÇÃO */
+        .actions-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .btn-action {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        .btn-blue { background-color: var(--canafistra-blue); }
+        .btn-gold { background-color: var(--canafistra-gold); color: #000000; }
+        .btn-purple { background-color: #7c3aed; }
+        .btn-orange { background-color: #d97706; }
+        .btn-green { background-color: #16a34a; }
+        .btn-red { background-color: #dc2626; }
+        .btn-gray { background-color: #475569; }
+
+        /* DASHBOARD GRID */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--canafistra-blue);
+            font-size: 15px;
+            font-weight: 700;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* STATUS DE OCUPAÇÃO */
+        .status-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .status-box {
+            background: #f8fafc;
+            padding: 12px 8px;
+            border-radius: 8px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .status-box span {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .status-box .num {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-top: 2px;
+        }
+
+        .total-quartos-banner {
+            background-color: #f0fdf4;
+            color: #166534;
+            font-weight: 800;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* RECEITA & DÍVIDAS */
+        .finance-top-box {
+            background-color: #f0fdf4;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 10px;
+            border: 1px solid #bbf7d0;
+        }
+
+        .finance-top-box span {
+            font-size: 11px;
+            font-weight: 700;
+            color: #166534;
+            text-transform: uppercase;
+        }
+
+        .finance-top-box .amount {
+            font-size: 22px;
+            font-weight: 800;
+            color: #15803d;
+            margin-top: 2px;
+        }
+
+        .finance-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .finance-box {
+            background: #f8fafc;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            color: #64748b;
+            border: 1px solid #f1f5f9;
+        }
+
+        .finance-box strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-top: 2px;
+        }
+
+        .finance-bottom-box {
+            background-color: #fffbeb;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 10px;
+            border: 1px solid #fef3c7;
+        }
+
+        .finance-bottom-box span {
+            font-size: 11px;
+            font-weight: 800;
+            color: #b45309;
+            text-transform: uppercase;
+        }
+
+        .finance-bottom-box .amount {
+            font-size: 20px;
+            font-weight: 800;
+            color: #d97706;
+            margin-top: 2px;
+        }
+
+        /* LEGENDA DE CORES */
+        .legend {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid #e2e8f0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .color-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* CORES DA INTERFACE */
+        .bg-livre {
+            background-color: #86efac !important;
+            color: #14532d !important;
+        }
+
+        .bg-ocupado {
+            background-color: #fca5a5 !important;
+            color: #7f1d1d !important;
+        }
+
+        .bg-limpeza {
+            background-color: #fde047 !important;
+            color: #713f12 !important;
+        }
+
+        .bg-manutencao {
+            background-color: #94a3b8 !important;
+            color: #0f172a !important;
+        }
 
         /* GRID DE QUARTOS */
-        .room-section { background: white; padding: 16px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
-        .room-section h3 { margin: 0 0 12px 0; font-size: 18px; color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 6px; font-weight: bold; }
-        .room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; }
-        .room-card { padding: 14px 4px; text-align: center; border-radius: 8px; font-weight: bold; cursor: pointer; user-select: none; font-size: 13px; transition: transform 0.1s; }
-        .room-card:active { transform: scale(0.96); }
+        .room-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .room-section h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--canafistra-blue);
+            margin-bottom: 14px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+
+        .room-card {
+            padding: 12px 4px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .room-card:active {
+            transform: scale(0.95);
+        }
 
         /* MODAIS */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 9000; padding: 10px; }
-        .modal-content { background: white; padding: 20px; border-radius: 10px; max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
-        .modal-content h3 { margin-top: 0; font-size: 17px; color: #2c3e50; display: flex; justify-content: space-between; align-items: center; }
-        .close-btn { cursor: pointer; color: #aaa; font-size: 20px; font-weight: bold; }
-        
-        .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .form-row .form-group { flex: 1; margin-bottom: 0; }
-        .form-group { margin-bottom: 12px; text-align: left; }
-        .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px; color: #34495e; }
-        .form-group input, .form-group select { width: 100%; padding: 9px; border: 1px solid #cccccc; border-radius: 5px; font-size: 13px; background-color: #fff; }
-        
-        .split-pay-box { background: #f8f9fa; border: 1px dashed #cbd5e1; padding: 10px; border-radius: 6px; margin-top: 8px; margin-bottom: 12px; }
-        
-        /* TABELA DE AGENDAMENTOS */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
-        th, td { padding: 8px; border: 1px solid #e2e8f0; text-align: left; }
-        th { background-color: #f1f5f9; color: #334155; }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9000;
+            padding: 10px;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 22px;
+            border-radius: 12px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: var(--canafistra-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            color: #94a3b8;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #334155;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 9px 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            background-color: #ffffff;
+            outline: none;
+        }
+
+        .split-pay-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-bottom: 12px;
+        }
+
+        /* TABELAS */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 9px 8px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+        }
 
         /* CALENDÁRIO */
-        #calendar { max-width: 100%; height: 420px; margin-top: 10px; }
-        .role-badge { background: #34495e; color: white; padding: 3px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase; margin-left: 6px; vertical-align: middle; }
+        #calendar {
+            max-width: 100%;
+            height: 420px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- MODAL DE LOGIN OVERLAY -->
+    <!-- MODAL DE LOGIN OVERLAY BRANCO -->
     <div id="modalLogin" class="modal-login">
         <div class="login-card">
+            <!-- LOGÓTIPO OFICIAL DA CANAFISTRA -->
+            <img src="https://i.postimg.cc/RCLJftjy/Logotipo-Canafistra-Site.png" alt="Canafistra Resort" class="logo-canafistra">
             <h3>Canafistra Resort</h3>
-            <p>Introduza a palavra-passe de acesso</p>
+            <p>Introduza a palavra-passe para aceder ao painel</p>
             <input type="password" id="loginPassword" placeholder="Palavra-passe">
             <button onclick="efetuarLogin()">Entrar no Painel</button>
         </div>
@@ -109,17 +591,30 @@
 
     <!-- CONTEÚDO PRINCIPAL DO PAINEL -->
     <div id="mainContent" class="main-content">
-        <header>
-            <div>
-                <h2 style="margin:0; font-size: 18px; color: #2c3e50;">Canafistra Resort <span id="lblPerfil" class="role-badge"></span></h2>
+        
+        <!-- CABEÇALHO BRANCO COM LOGÓTIPO OFICIAL -->
+        <div class="header-container">
+            <img src="https://i.postimg.cc/RCLJftjy/Logotipo-Canafistra-Site.png" alt="Canafistra Resort" class="logo-canafistra">
+            <div class="title-row">
+                <h1>CANAFISTRA RESORT</h1>
+                <span id="lblPerfil" class="role-badge">ADMINISTRADOR</span>
             </div>
-            <div class="actions-container">
-                <button class="btn-action btn-blue" onclick="abrirModalReserva()">📅 Nova Reserva</button>
-                <button class="btn-action btn-purple" onclick="abrirModalCalendario()">🗓️ Calendário</button>
-                <button class="btn-action btn-orange" onclick="abrirModalAgendamentos()">📋 Agendamentos</button>
-                <button class="btn-action btn-gray" onclick="sair()">🔒 Sair</button>
-            </div>
-        </header>
+            <div class="subtitle">Painel de Gestão Operacional & Reservas</div>
+        </div>
+
+        <!-- BARRA DE PESQUISA OVAL -->
+        <div class="busca-wrapper">
+            <input type="text" id="campoBusca" placeholder="🔍 Pesquisar por hóspede ou nº do quarto..." onkeyup="filtrarQuartosEBusca()">
+        </div>
+
+        <!-- BOTÕES DE AÇÃO -->
+        <div class="actions-container">
+            <button class="btn-action btn-blue" onclick="abrirModalReserva()">📅 Nova Reserva</button>
+            <button class="btn-action btn-purple" onclick="abrirModalCalendario()">🗓️ Calendário</button>
+            <button class="btn-action btn-orange" onclick="abrirModalAgendamentos()">📋 Agendamentos</button>
+            <button class="btn-action btn-green admin-only" onclick="exportarCSV()">📊 Exportar CSV</button>
+            <button class="btn-action btn-gray" onclick="sair()">🔒 Sair</button>
+        </div>
 
         <!-- DASHBOARD DE OCUPAÇÃO E FINANCEIRO -->
         <div class="dashboard-grid">
@@ -127,21 +622,21 @@
             <div class="card">
                 <h3>📊 Status de Ocupação</h3>
                 <div class="status-summary">
-                    <div class="status-box"><span style="color:#27ae60">Livres</span><div class="num" id="cntLivre">0</div></div>
-                    <div class="status-box"><span style="color:#e74c3c">Ocupados</span><div class="num" id="cntOcupado">0</div></div>
-                    <div class="status-box"><span style="color:#f1c40f">Limpeza</span><div class="num" id="cntLimpeza">0</div></div>
-                    <div class="status-box"><span style="color:#6c7a89">Manutenção</span><div class="num" id="cntManutencao">0</div></div>
+                    <div class="status-box"><span style="color:#16a34a">LIVRES</span><div class="num" id="cntLivre">52</div></div>
+                    <div class="status-box"><span style="color:#dc2626">OCUPADOS</span><div class="num" id="cntOcupado">0</div></div>
+                    <div class="status-box"><span style="color:#ca8a04">LIMPEZA</span><div class="num" id="cntLimpeza">0</div></div>
+                    <div class="status-box"><span style="color:#475569">MANUTENÇÃO</span><div class="num" id="cntManutencao">0</div></div>
                 </div>
-                <div style="text-align: center; margin-top: 10px; background: #e8f8f5; padding: 8px; border-radius: 6px;">
-                    <span style="font-size: 11px; color: #16a085; font-weight: bold;">TOTAL QUARTOS: <strong id="cntTotalQuartos">52</strong></span>
+                <div class="total-quartos-banner">
+                    TOTAL QUARTOS: <span id="cntTotalQuartos">52</span>
                 </div>
             </div>
 
-            <!-- RECEITA & DÍVIDAS (VISÍVEL APENAS PARA ADMINISTRADOR) -->
+            <!-- RECEITA & DÍVIDAS -->
             <div class="card admin-only">
                 <h3>💰 Receita & Dívidas</h3>
-                <div class="total-box">
-                    <span style="font-size: 11px; color: #7f8c8d; font-weight: bold;">TOTAL ARRECADADO</span>
+                <div class="finance-top-box">
+                    <span>TOTAL ARRECADADO</span>
                     <div class="amount" id="txtReceitaTotal">0 XOF</div>
                 </div>
                 <div class="finance-grid">
@@ -150,10 +645,14 @@
                     <div class="finance-box">Multibanco<strong id="txtReceitaMulti">0 XOF</strong></div>
                     <div class="finance-box">Depósito<strong id="txtReceitaDep">0 XOF</strong></div>
                 </div>
+                <div class="finance-bottom-box">
+                    <span>TOTAL EM DÍVIDAS</span>
+                    <div class="amount" id="txtTotalDivida">0 XOF</div>
+                </div>
             </div>
         </div>
 
-        <!-- LEGENDAS DE CORES DAS SUÍTES -->
+        <!-- LEGENDAS DE CORES -->
         <div class="legend">
             <div class="legend-item"><span class="color-box bg-livre"></span> Livre</div>
             <div class="legend-item"><span class="color-box bg-ocupado"></span> Ocupado</div>
@@ -229,12 +728,12 @@
                 </div>
             </div>
 
-            <div style="background:#e8f8f5; padding:10px; border-radius:6px; text-align:center; margin-bottom:12px;">
-                <span style="font-size:11px; color:#16a085; font-weight:bold;">TOTAL ESTADIA (XOF):</span>
-                <div style="font-size:22px; font-weight:bold; color:#27ae60;" id="txtTotalEstadiaCalculado">0</div>
+            <div style="background:#f0fdf4; padding:10px; border-radius:6px; text-align:center; margin-bottom:12px; border:1px solid #bbf7d0;">
+                <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL ESTADIA (XOF):</span>
+                <div style="font-size:22px; font-weight:bold; color:#15803d;" id="txtTotalEstadiaCalculado">0</div>
             </div>
 
-            <!-- PAGAMENTO MISTO / MULTIPLAS FORMAS -->
+            <!-- PAGAMENTO MISTO -->
             <div class="split-pay-box">
                 <label style="font-size:12px; font-weight:bold; color:#2c3e50;">Formas de Pagamento (Misto):</label>
                 
@@ -287,7 +786,7 @@
         </div>
     </div>
 
-    <!-- MODAL NOVA RESERVA (ANTI-OVERBOOKING E PAGAMENTO MISTO) -->
+    <!-- MODAL NOVA RESERVA -->
     <div id="modalReserva" class="modal">
         <div class="modal-content">
             <h3>📅 Agendar Nova Reserva <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
@@ -390,12 +889,12 @@
     </div>
 
     <script>
-        // CONFIGURAÇÕES DO SUPABASE (Insira suas chaves)
+        // CONFIGURAÇÕES DO SUPABASE
         const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
         const SUPABASE_KEY = "SUA-CHAVE-ANON";
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // ESTRUTURA REAL DOS 52 QUARTOS DO CANAFISTRA RESORT
+        // ESTRUTURA DOS 52 QUARTOS DO CANAFISTRA RESORT
         const ESTRUTURA_QUARTOS = [
             {
                 categoria: "Suite Básica",
@@ -429,15 +928,16 @@
         let userPerfil = 'admin';
         let quartoAtual = null;
         let calendarObj = null;
+        let dadosLocaisQuartos = {};
 
         function efetuarLogin() {
             const pwd = document.getElementById('loginPassword').value.trim();
             if (pwd === 'canafistra2026') {
                 userPerfil = 'admin';
-                iniciarSessao('Administrador');
+                iniciarSessao('ADMINISTRADOR');
             } else if (pwd === 'recepcao2026') {
                 userPerfil = 'recepcao';
-                iniciarSessao('Recepcionista');
+                iniciarSessao('RECEPCIONISTA');
             } else {
                 alert('Palavra-passe incorreta!');
             }
@@ -470,16 +970,21 @@
         }
 
         async function carregarPainel() {
-            const { data, error } = await supabase.from('quartos_status').select('*');
+            const { data, error } = await supabaseClient.from('quartos_status').select('*');
             
             let cLivre = 0, cOcupado = 0, cLimpeza = 0, cManutencao = 0;
-            let totCash = 0, totOrange = 0, totMulti = 0, totDep = 0;
-            const mapaQuartos = {};
+            let totCash = 0, totOrange = 0, totMulti = 0, totDep = 0, totDivida = 0;
+            dadosLocaisQuartos = {};
 
             if (data && !error) {
                 data.forEach(q => {
-                    mapaQuartos[q.quarto] = q;
-                    if (q.status === 'Ocupado') cOcupado++;
+                    dadosLocaisQuartos[q.quarto] = q;
+                    if (q.status === 'Ocupado') {
+                        cOcupado++;
+                        if (q.chkStatusPagamento === 'Pendente') {
+                            totDivida += (q.total_pago || 0);
+                        }
+                    }
                     else if (q.status === 'Limpeza') cLimpeza++;
                     else if (q.status === 'Manutenção') cManutencao++;
                     else cLivre++;
@@ -511,8 +1016,9 @@
             document.getElementById('txtReceitaOrange').innerText = totOrange.toLocaleString() + ' XOF';
             document.getElementById('txtReceitaMulti').innerText = totMulti.toLocaleString() + ' XOF';
             document.getElementById('txtReceitaDep').innerText = totDep.toLocaleString() + ' XOF';
+            document.getElementById('txtTotalDivida').innerText = totDivida.toLocaleString() + ' XOF';
 
-            renderizarQuartos(mapaQuartos);
+            renderizarQuartos(dadosLocaisQuartos);
         }
 
         function renderizarQuartos(mapa) {
@@ -529,7 +1035,7 @@
                     else if (info.status === 'Limpeza') bgClass = 'bg-limpeza';
                     else if (info.status === 'Manutenção') bgClass = 'bg-manutencao';
 
-                    html += `<div class="room-card ${bgClass}" onclick="abrirModalCheckin('${num}')">${num}</div>`;
+                    html += `<div class="room-card ${bgClass}" id="card-quarto-${num}" onclick="abrirModalCheckin('${num}')">${num}</div>`;
                 });
                 html += '</div></div>';
             });
@@ -537,11 +1043,29 @@
             container.innerHTML = html;
         }
 
+        function filtrarQuartosEBusca() {
+            const termo = document.getElementById('campoBusca').value.toLowerCase().trim();
+            ESTRUTURA_QUARTOS.forEach(bloco => {
+                bloco.quartos.forEach(num => {
+                    const el = document.getElementById(`card-quarto-${num}`);
+                    const info = dadosLocaisQuartos[num] || {};
+                    const hospede = (info.hospede || '').toLowerCase();
+                    const qNum = num.toLowerCase();
+
+                    if (!termo || qNum.includes(termo) || hospede.includes(termo)) {
+                        if (el) el.style.display = 'block';
+                    } else {
+                        if (el) el.style.display = 'none';
+                    }
+                });
+            });
+        }
+
         async function abrirModalCheckin(numQuarto) {
             quartoAtual = numQuarto;
             document.getElementById('chkTitulo').innerText = 'Check-in: Quarto ' + numQuarto;
             
-            const { data } = await supabase.from('quartos_status').select('*').eq('quarto', numQuarto).single();
+            const { data } = await supabaseClient.from('quartos_status').select('*').eq('quarto', numQuarto).single();
 
             if (data && data.status === 'Ocupado') {
                 document.getElementById('chkNome').value = data.hospede || '';
@@ -549,6 +1073,10 @@
                 document.getElementById('chkNacionalidade').value = data.nacionalidade || '';
                 document.getElementById('chkNoDoc').value = data.no_doc || '';
                 document.getElementById('chkValorDiaria').value = data.valor_diaria || '';
+                document.getElementById('chkPayMethod1').value = data.pay_method1 || 'Cash (Dinheiro)';
+                document.getElementById('chkPayVal1').value = data.val_pago1 || '';
+                document.getElementById('chkPayMethod2').value = data.pay_method2 || '';
+                document.getElementById('chkPayVal2').value = data.val_pago2 || '';
                 document.getElementById('btnCheckout').style.display = 'inline-flex';
             } else {
                 document.getElementById('chkNome').value = '';
@@ -556,6 +1084,8 @@
                 document.getElementById('chkNacionalidade').value = '';
                 document.getElementById('chkNoDoc').value = '';
                 document.getElementById('chkValorDiaria').value = '';
+                document.getElementById('chkPayVal1').value = '';
+                document.getElementById('chkPayVal2').value = '';
                 document.getElementById('btnCheckout').style.display = 'none';
             }
 
@@ -607,7 +1137,7 @@
                 total_pago: (val1 + val2)
             };
 
-            const { error } = await supabase.from('quartos_status').upsert(payload, { onConflict: 'quarto' });
+            const { error } = await supabaseClient.from('quartos_status').upsert(payload, { onConflict: 'quarto' });
 
             if (error) alert('Erro ao efetuar Check-in: ' + error.message);
             else {
@@ -625,9 +1155,10 @@
             elemento.style.padding = '20px';
             elemento.style.fontFamily = 'Arial, sans-serif';
             elemento.innerHTML = `
-                <div style="text-align:center; border-bottom:2px solid #27ae60; padding-bottom:10px; margin-bottom:15px;">
-                    <h2 style="color:#2c3e50; margin:0;">Canafistra Resort</h2>
-                    <p style="margin:2px 0; color:#7f8c8d; font-size:12px;">Comprovativo / Recibo de Hospedagem</p>
+                <div style="text-align:center; background-color:#ffffff; padding:15px; border-radius:8px; margin-bottom:15px; border:1px solid #ddd;">
+                    <img src="https://i.postimg.cc/RCLJftjy/Logotipo-Canafistra-Site.png" style="max-width:180px; height:auto; margin-bottom:8px;">
+                    <h2 style="color:#CBA135; margin:0;">CANAFISTRA RESORT</h2>
+                    <p style="margin:4px 0 0 0; color:#16447C; font-size:12px; font-weight:bold;">CRESCENDO À BEIRA RIO</p>
                 </div>
                 <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:15px;">
                     <tr><td><strong>Hóspede:</strong> ${nome}</td><td><strong>Quarto:</strong> ${quartoAtual}</td></tr>
@@ -637,9 +1168,9 @@
                 </table>
                 <div style="background:#f8f9fa; padding:12px; border:1px solid #ddd; border-radius:6px; text-align:right;">
                     <p style="margin:0; font-size:14px;"><strong>Total Estadia:</strong> ${document.getElementById('txtTotalEstadiaCalculado').innerText}</p>
-                    <p style="margin:4px 0 0 0; font-size:12px; color:#27ae60;"><strong>Pagamento:</strong> ${document.getElementById('chkPayMethod1').value} (${document.getElementById('chkPayVal1').value} XOF) ${document.getElementById('chkPayMethod2').value ? '| ' + document.getElementById('chkPayMethod2').value + ' (' + document.getElementById('chkPayVal2').value + ' XOF)' : ''}</p>
+                    <p style="margin:4px 0 0 0; font-size:12px; color:#16a34a;"><strong>Pagamento:</strong> ${document.getElementById('chkPayMethod1').value} (${document.getElementById('chkPayVal1').value} XOF) ${document.getElementById('chkPayMethod2').value ? '| ' + document.getElementById('chkPayMethod2').value + ' (' + document.getElementById('chkPayVal2').value + ' XOF)' : ''}</p>
                 </div>
-                <div style="margin-top:30px; text-align:center; font-size:11px; color:#999;">
+                <div style="margin-top:30px; text-align:center; font-size:11px; color:#777;">
                     <p>Obrigado pela preferência! — Canafistra Resort</p>
                 </div>
             `;
@@ -655,8 +1186,26 @@
             html2pdf().set(opt).from(elemento).save();
         }
 
+        async function exportarCSV() {
+            const { data } = await supabaseClient.from('quartos_status').select('*');
+            if (!data || data.length === 0) { alert('Sem dados para exportar.'); return; }
+
+            let csv = 'Quarto,Status,Hospede,Data Entrada,Data Saida,Valor Total (XOF)\n';
+            data.forEach(q => {
+                csv += `"${q.quarto}","${q.status}","${q.hospede || ''}","${q.data_entrada || ''}","${q.data_saida || ''}","${q.total_pago || 0}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `Relatorio_Canafistra_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
         async function marcarStatusQuarto(novoStatus) {
-            const { error } = await supabase.from('quartos_status').upsert({
+            const { error } = await supabaseClient.from('quartos_status').upsert({
                 quarto: quartoAtual,
                 status: novoStatus
             }, { onConflict: 'quarto' });
@@ -671,7 +1220,7 @@
         async function executarCheckout() {
             if (!confirm(`Confirma o Check-out do Quarto ${quartoAtual}?`)) return;
 
-            const { error } = await supabase.from('quartos_status').upsert({
+            const { error } = await supabaseClient.from('quartos_status').upsert({
                 quarto: quartoAtual,
                 status: 'Livre',
                 hospede: null,
@@ -698,8 +1247,8 @@
                 return;
             }
 
-            const { data: agendamentos } = await supabase.from('agendamentos').select('*');
-            const { data: ocupadosHoje } = await supabase.from('quartos_status').select('quarto').eq('status', 'Ocupado');
+            const { data: agendamentos } = await supabaseClient.from('agendamentos').select('*');
+            const { data: ocupadosHoje } = await supabaseClient.from('quartos_status').select('quarto').eq('status', 'Ocupado');
 
             const bloqueados = (agendamentos || []).filter(a => {
                 return (entrada < a.data_saida && saida > a.data_entrada);
@@ -739,7 +1288,7 @@
             const pay2 = document.getElementById('resPayMethod2').value;
             const val2 = parseFloat(document.getElementById('resPayVal2').value) || 0;
 
-            const { error } = await supabase.from('agendamentos').insert([{
+            const { error } = await supabaseClient.from('agendamentos').insert([{
                 hospede: nome,
                 data_entrada: entrada,
                 data_saida: saida,
@@ -764,7 +1313,7 @@
             const tabela = document.getElementById('tbAgendamentosBody');
             tabela.innerHTML = '<tr><td colspan="5" style="text-align:center;">A carregar...</td></tr>';
 
-            const { data, error } = await supabase.from('agendamentos').select('*').order('data_entrada', { ascending: true });
+            const { data, error } = await supabaseClient.from('agendamentos').select('*').order('data_entrada', { ascending: true });
 
             if (error || !data || data.length === 0) {
                 tabela.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#777;">Nenhum agendamento encontrado.</td></tr>';
@@ -781,7 +1330,7 @@
                 html += `
                     <tr>
                         <td><strong>${a.hospede}</strong></td>
-                        <td><span class="role-badge" style="background:#27ae60;">${a.quarto}</span></td>
+                        <td><span class="role-badge" style="background:#16a34a;">${a.quarto}</span></td>
                         <td>${a.data_entrada} a ${a.data_saida}</td>
                         <td>${pag}</td>
                         <td><button class="btn-action btn-red" style="padding:4px 8px; font-size:11px;" onclick="cancelarAgendamento(${a.id})">Cancelar</button></td>
@@ -794,7 +1343,7 @@
 
         async function cancelarAgendamento(id) {
             if (!confirm('Tem a certeza que deseja cancelar esta reserva?')) return;
-            const { error } = await supabase.from('agendamentos').delete().eq('id', id);
+            const { error } = await supabaseClient.from('agendamentos').delete().eq('id', id);
 
             if (error) alert('Erro ao cancelar agendamento: ' + error.message);
             else {
@@ -807,12 +1356,12 @@
         async function abrirModalCalendario() {
             document.getElementById('modalCalendario').style.display = 'flex';
             
-            const { data: agendamentos } = await supabase.from('agendamentos').select('*');
+            const { data: agendamentos } = await supabaseClient.from('agendamentos').select('*');
             const eventos = (agendamentos || []).map(a => ({
                 title: `${a.quarto} - ${a.hospede}`,
                 start: a.data_entrada,
                 end: a.data_saida,
-                color: '#3498db'
+                color: '#16447C'
             }));
 
             const calendarEl = document.getElementById('calendar');
