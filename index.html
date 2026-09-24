@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Canafistra Resort</title>
-    
+
     <!-- Biblioteca para Geração de PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- FullCalendar para Calendário de Reservas -->
@@ -267,6 +267,7 @@
             <button class="btn-action btn-purple" onclick="abrirModalCalendario()">🗓️ Calendário</button>
             <button class="btn-action btn-orange" onclick="abrirModalAgendamentos()">📋 Agendamentos</button>
             <button class="btn-action btn-green admin-only" onclick="exportarCSV()">📊 Exportar CSV</button>
+            <button class="btn-action btn-red admin-only" onclick="limparHistoricoEReceita()">🗑️ Limpar Histórico</button>
             <button class="btn-action btn-gray" onclick="sair()">🔒 Sair</button>
         </div>
 
@@ -684,7 +685,7 @@
             document.getElementById('lblPerfil').innerText = nomePerfil;
 
             const elementosAdmin = document.querySelectorAll('.admin-only');
-            elementosAdmin.forEach(el => el.style.display = userPerfil === 'admin' ? 'block' : 'none');
+            elementosAdmin.forEach(el => el.style.display = userPerfil === 'admin' ? 'inline-flex' : 'none');
 
             const hoje = new Date().toISOString().split('T')[0];
             const amanha = new Date(Date.now() + 86400000).toISOString().split('T')[0];
@@ -736,7 +737,7 @@
                 somarPagamento(a.pay_method3, a.val_pago3);
             });
 
-            // 3. Somar HISTÓRICO ACUMULADO de Check-outs já realizados!
+            // 3. Somar HISTÓRICO ACUMULADO de Check-outs realizados
             historico.forEach(h => {
                 somarPagamento(h.pay_method1, h.val_pago1);
                 somarPagamento(h.pay_method2, h.val_pago2);
@@ -890,7 +891,7 @@
             const total = diffNoites * diaria;
             document.getElementById('txtTotalEstadiaCalculado').innerText = total.toLocaleString() + ' XOF';
             
-            if (!document.getElementById('chkPayVal1').value) {
+            if (!document.getElementById('chkPayVal1').value || parseFloat(document.getElementById('chkPayVal1').value) === 0) {
                 document.getElementById('chkPayVal1').value = total;
             }
         }
@@ -898,6 +899,16 @@
         function confirmarCheckin() {
             const nome = document.getElementById('chkNome').value;
             if (!nome) { alert('Introduza o nome do hóspede!'); return; }
+
+            let v1 = parseFloat(document.getElementById('chkPayVal1').value);
+            if (isNaN(v1) || v1 <= 0) {
+                const d1 = new Date(document.getElementById('chkDataEntrada').value);
+                const d2 = new Date(document.getElementById('chkDataSaida').value);
+                const diaria = parseFloat(document.getElementById('chkValorDiaria').value) || 0;
+                let diffNoites = Math.ceil((d2 - d1) / (1000 * 60 * 60 * 24));
+                if (isNaN(diffNoites) || diffNoites <= 0) diffNoites = 1;
+                v1 = diffNoites * diaria;
+            }
 
             const mapa = carregarDadosQuartos();
             mapa[quartoAtual] = {
@@ -913,7 +924,7 @@
                 no_doc: document.getElementById('chkNoDoc').value,
                 valor_diaria: parseFloat(document.getElementById('chkValorDiaria').value) || 0,
                 pay_method1: document.getElementById('chkPayMethod1').value,
-                val_pago1: parseFloat(document.getElementById('chkPayVal1').value) || 0,
+                val_pago1: v1,
                 pay_method2: document.getElementById('chkPayMethod2').value,
                 val_pago2: parseFloat(document.getElementById('chkPayVal2').value) || 0,
                 pay_method3: document.getElementById('chkPayMethod3').value,
@@ -937,7 +948,7 @@
 
         function concluirLimpezaQuarto() {
             const mapa = carregarDadosQuartos();
-            delete mapa[quartoAtual]; // Quarto volta a ficar completamente Livre
+            delete mapa[quartoAtual];
             salvarDadosQuartos(mapa);
             alert(`Limpeza do Quarto ${quartoAtual} concluída! O quarto agora está Livre.`);
             fecharModais();
@@ -951,7 +962,6 @@
             const dataQuarto = mapa[quartoAtual];
 
             if (dataQuarto) {
-                // 1. Guardar a venda no histórico acumulado para NÃO PERDER A RECEITA
                 const historico = carregarHistorico();
                 historico.push({
                     quarto: quartoAtual,
@@ -967,7 +977,6 @@
                 salvarHistorico(historico);
             }
 
-            // 2. Colocar o quarto em Limpeza automaticamente
             mapa[quartoAtual] = {
                 quarto: quartoAtual,
                 status: 'Limpeza'
@@ -977,6 +986,14 @@
             alert(`Check-out efetuado! Quarto ${quartoAtual} foi colocado em LIMPEZA.`);
             fecharModais();
             carregarPainel();
+        }
+
+        function limparHistoricoEReceita() {
+            if (confirm("⚠️ Tem certeza que deseja LIMPAR todo o histórico de check-outs e ZERAR a receita arrecadada acumulada?")) {
+                localStorage.removeItem('canafistra_historico');
+                alert("Histórico de check-outs e receita acumulada zerados com sucesso!");
+                carregarPainel();
+            }
         }
 
         function gerarReciboPDF() {
@@ -1164,3 +1181,4 @@
     </script>
 </body>
 </html>
+
