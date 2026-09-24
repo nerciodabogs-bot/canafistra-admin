@@ -10,6 +10,10 @@
     <!-- FullCalendar para Calendário de Reservas -->
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
+    <!-- Firebase SDK (Para Sincronização em Múltiplos Dispositivos) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
             --canafistra-gold: #CBA135;
@@ -75,6 +79,18 @@
             color: #000000; border: none; border-radius: 8px;
             font-size: 16px; font-weight: bold; cursor: pointer;
         }
+
+        /* BANNER DE STATUS DE SINCRONIZAÇÃO */
+        .sync-badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-top: 6px;
+        }
+        .sync-online { background-color: #dcfce7; color: #15803d; }
+        .sync-local { background-color: #fef3c7; color: #b45309; }
 
         /* CONTEÚDO PRINCIPAL */
         .main-content {
@@ -256,6 +272,7 @@
                 <span id="lblPerfil" class="role-badge">ADMINISTRADOR</span>
             </div>
             <div class="subtitle">Painel de Gestão Operacional & Reservas</div>
+            <div><span id="lblSyncStatus" class="sync-badge sync-local">🔄 Modo Local</span></div>
         </div>
 
         <div class="busca-wrapper">
@@ -629,6 +646,34 @@
     </div>
 
     <script>
+        // ==========================================
+        // CONFIGURAÇÃO DO FIREBASE (MULTIDISPOSITIVOS)
+        // Substitua os valores abaixo pelas suas chaves da Consola do Firebase!
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY_AQUI",
+            authDomain: "seu-projeto.firebaseapp.com",
+            databaseURL: "https://seu-projeto-default-rtdb.firebaseio.com",
+            projectId: "seu-projeto",
+            storageBucket: "seu-projeto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        let useFirebase = false;
+        let db = null;
+
+        // Tentar inicializar o Firebase
+        try {
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "SUA_API_KEY_AQUI") {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.database();
+                useFirebase = true;
+            }
+        } catch (e) {
+            console.warn("Firebase não configurado ainda. A utilizar armazenamento local.", e);
+        }
+
         const ESTRUTURA_QUARTOS = [
             { categoria: "Suite Básica", quartos: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7", "A-8", "A-9", "A-10"] },
             { categoria: "Suite Executiva", quartos: ["TG1-1", "TG1-2", "TG1-3", "TG1-4", "TG1-5", "TG1-6", "TG1-7", "TG1-8", "TG1-9", "TG1-10", "TG2-1", "TG2-2", "TG2-3", "TG2-4", "TG2-5", "TG2-6", "TG2-7", "TG2-8", "TG2-9", "TG2-10"] },
@@ -642,28 +687,71 @@
         let quartoAtual = null;
         let calendarObj = null;
 
-        function carregarDadosQuartos() {
-            return JSON.parse(localStorage.getItem('canafistra_quartos') || '{}');
+        let cacheQuartos = {};
+        let cacheAgendamentos = [];
+        let cacheHistorico = [];
+
+        function inicializarOuvintesSincronizacao() {
+            const badge = document.getElementById('lblSyncStatus');
+            if (useFirebase && db) {
+                badge.className = "sync-badge sync-online";
+                badge.innerText = "🌐 Sincronizado (Multi-Dispositivos)";
+
+                // Ouvir alterações de quartos em tempo real
+                db.ref('quartos').on('value', snap => {
+                    cacheQuartos = snap.val() || {};
+                    carregarPainel();
+                });
+
+                // Ouvir alterações de agendamentos em tempo real
+                db.ref('agendamentos').on('value', snap => {
+                    const val = snap.val();
+                    cacheAgendamentos = val ? (Array.isArray(val) ? val : Object.values(val)) : [];
+                    carregarPainel();
+                });
+
+                // Ouvir alterações do histórico em tempo real
+                db.ref('historico').on('value', snap => {
+                    const val = snap.val();
+                    cacheHistorico = val ? (Array.isArray(val) ? val : Object.values(val)) : [];
+                    carregarPainel();
+                });
+            } else {
+                badge.className = "sync-badge sync-local";
+                badge.innerText = "🔄 Modo Local (Aguardando Chaves do Firebase)";
+                
+                cacheQuartos = JSON.parse(localStorage.getItem('canafistra_quartos') || '{}');
+                cacheAgendamentos = JSON.parse(localStorage.getItem('canafistra_agendamentos') || '[]');
+                cacheHistorico = JSON.parse(localStorage.getItem('canafistra_historico') || '[]');
+                carregarPainel();
+            }
         }
 
         function salvarDadosQuartos(dados) {
-            localStorage.setItem('canafistra_quartos', JSON.stringify(dados));
-        }
-
-        function carregarAgendamentos() {
-            return JSON.parse(localStorage.getItem('canafistra_agendamentos') || '[]');
+            cacheQuartos = dados;
+            if (useFirebase && db) {
+                db.ref('quartos').set(dados);
+            } else {
+                localStorage.setItem('canafistra_quartos', JSON.stringify(dados));
+            }
         }
 
         function salvarAgendamentos(lista) {
-            localStorage.setItem('canafistra_agendamentos', JSON.stringify(lista));
-        }
-
-        function carregarHistorico() {
-            return JSON.parse(localStorage.getItem('canafistra_historico') || '[]');
+            cacheAgendamentos = lista;
+            if (useFirebase && db) {
+                db.ref('agendamentos').set(lista);
+            } else {
+                localStorage.setItem('canafistra_agendamentos', JSON.stringify(lista));
+            }
         }
 
         function salvarHistorico(lista) {
-            localStorage.setItem('canafistra_historico', JSON.stringify(lista));
+            cacheHistorico = lista;
+            if (useFirebase && db) {
+                db.ref('historico').set(lista);
+            } else {
+                localStorage.setItem('canafistra_historico', JSON.stringify(lista));
+            }
         }
 
         function efetuarLogin() {
@@ -695,7 +783,7 @@
             document.getElementById('resDataEntrada').value = hoje;
             document.getElementById('resDataSaida').value = amanha;
 
-            carregarPainel();
+            inicializarOuvintesSincronizacao();
         }
 
         function sair() {
@@ -704,9 +792,9 @@
         }
 
         function carregarPainel() {
-            const mapa = carregarDadosQuartos();
-            const agendamentos = carregarAgendamentos();
-            const historico = carregarHistorico();
+            const mapa = cacheQuartos;
+            const agendamentos = cacheAgendamentos;
+            const historico = cacheHistorico;
 
             let cLivre = 0, cOcupado = 0, cLimpeza = 0, cManutencao = 0;
             let totCash = 0, totOrange = 0, totCartao = 0;
@@ -737,7 +825,7 @@
                 somarPagamento(a.pay_method3, a.val_pago3);
             });
 
-            // 3. Somar HISTÓRICO ACUMULADO de Check-outs realizados
+            // 3. Somar HISTÓRICO ACUMULADO de Check-outs já realizados
             historico.forEach(h => {
                 somarPagamento(h.pay_method1, h.val_pago1);
                 somarPagamento(h.pay_method2, h.val_pago2);
@@ -783,7 +871,7 @@
 
         function filtrarQuartosEBusca() {
             const termo = document.getElementById('campoBusca').value.toLowerCase().trim();
-            const mapa = carregarDadosQuartos();
+            const mapa = cacheQuartos;
 
             ESTRUTURA_QUARTOS.forEach(bloco => {
                 bloco.quartos.forEach(num => {
@@ -811,7 +899,7 @@
             quartoAtual = numQuarto;
             document.getElementById('chkTitulo').innerText = 'Gestão: Quarto ' + numQuarto;
             
-            const mapa = carregarDadosQuartos();
+            const mapa = cacheQuartos;
             const data = mapa[numQuarto];
 
             const secForm = document.getElementById('secFormCheckin');
@@ -910,7 +998,7 @@
                 v1 = diffNoites * diaria;
             }
 
-            const mapa = carregarDadosQuartos();
+            const mapa = cacheQuartos;
             mapa[quartoAtual] = {
                 quarto: quartoAtual,
                 status: 'Ocupado',
@@ -939,7 +1027,7 @@
         }
 
         function marcarStatusQuarto(novoStatus) {
-            const mapa = carregarDadosQuartos();
+            const mapa = cacheQuartos;
             mapa[quartoAtual] = { quarto: quartoAtual, status: novoStatus };
             salvarDadosQuartos(mapa);
             fecharModais();
@@ -947,7 +1035,7 @@
         }
 
         function concluirLimpezaQuarto() {
-            const mapa = carregarDadosQuartos();
+            const mapa = cacheQuartos;
             delete mapa[quartoAtual];
             salvarDadosQuartos(mapa);
             alert(`Limpeza do Quarto ${quartoAtual} concluída! O quarto agora está Livre.`);
@@ -958,11 +1046,11 @@
         function executarCheckout() {
             if (!confirm(`Confirma Check-out do Quarto ${quartoAtual}? O quarto passará para LIMPEZA.`)) return;
             
-            const mapa = carregarDadosQuartos();
+            const mapa = cacheQuartos;
             const dataQuarto = mapa[quartoAtual];
 
             if (dataQuarto) {
-                const historico = carregarHistorico();
+                const historico = cacheHistorico;
                 historico.push({
                     quarto: quartoAtual,
                     hospede: dataQuarto.hospede,
@@ -990,7 +1078,7 @@
 
         function limparHistoricoEReceita() {
             if (confirm("⚠️ Tem certeza que deseja LIMPAR todo o histórico de check-outs e ZERAR a receita arrecadada acumulada?")) {
-                localStorage.removeItem('canafistra_historico');
+                salvarHistorico([]);
                 alert("Histórico de check-outs e receita acumulada zerados com sucesso!");
                 carregarPainel();
             }
@@ -1030,8 +1118,8 @@
         }
 
         function exportarCSV() {
-            const mapa = carregarDadosQuartos();
-            const historico = carregarHistorico();
+            const mapa = cacheQuartos;
+            const historico = cacheHistorico;
 
             let csv = 'Quarto,Status,Hospede,Telefone,Entrada,Saida,TotalPago,StatusPagamento\n';
             
@@ -1096,7 +1184,7 @@
             const quarto = document.getElementById('resQuarto').value;
             if (!nome) { alert('Digite o nome do hóspede!'); return; }
 
-            const lista = carregarAgendamentos();
+            const lista = cacheAgendamentos;
             lista.push({
                 id: Date.now(),
                 hospede: nome,
@@ -1127,7 +1215,7 @@
 
         function abrirModalAgendamentos() {
             document.getElementById('modalAgendamentos').style.display = 'flex';
-            const lista = carregarAgendamentos();
+            const lista = cacheAgendamentos;
             const tb = document.getElementById('tbAgendamentosBody');
             if (lista.length === 0) {
                 tb.innerHTML = '<tr><td colspan="5" style="text-align:center;">Sem reservas registadas.</td></tr>';
@@ -1149,7 +1237,7 @@
 
         function cancelarAgendamento(id) {
             if (!confirm('Deseja cancelar esta reserva?')) return;
-            let lista = carregarAgendamentos();
+            let lista = cacheAgendamentos;
             lista = lista.filter(a => a.id !== id);
             salvarAgendamentos(lista);
             abrirModalAgendamentos();
@@ -1158,7 +1246,7 @@
 
         function abrirModalCalendario() {
             document.getElementById('modalCalendario').style.display = 'flex';
-            const lista = carregarAgendamentos();
+            const lista = cacheAgendamentos;
             const eventos = lista.map(a => ({ 
                 title: `${a.quarto} - ${a.hospede}`, 
                 start: a.data_entrada, 
@@ -1181,4 +1269,3 @@
     </script>
 </body>
 </html>
-
