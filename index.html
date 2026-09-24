@@ -165,7 +165,7 @@
         .status-box .num { font-size: 22px; font-weight: 800; color: #1e293b; }
 
         .finance-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center;
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; text-align: center;
         }
 
         .finance-box {
@@ -282,16 +282,15 @@
             </div>
 
             <div class="card admin-only">
-                <h3>💰 Receita & Dívidas</h3>
+                <h3>💰 Receita Total Arrecadada</h3>
                 <div style="text-align:center; background:#f0fdf4; padding:10px; border-radius:8px; margin-bottom:8px;">
-                    <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL ARRECADADO</span>
+                    <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL GERAL</span>
                     <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtReceitaTotal">0 XOF</div>
                 </div>
                 <div class="finance-grid">
                     <div class="finance-box">Cash<br><strong id="txtReceitaCash">0 XOF</strong></div>
-                    <div class="finance-box">Orange<br><strong id="txtReceitaOrange">0 XOF</strong></div>
-                    <div class="finance-box">Multi<br><strong id="txtReceitaMulti">0 XOF</strong></div>
-                    <div class="finance-box">Depósito<br><strong id="txtReceitaDep">0 XOF</strong></div>
+                    <div class="finance-box">Orange Money<br><strong id="txtReceitaOrange">0 XOF</strong></div>
+                    <div class="finance-box">Cartão<br><strong id="txtReceitaCartao">0 XOF</strong></div>
                 </div>
             </div>
         </div>
@@ -375,38 +374,53 @@
                 <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtTotalEstadiaCalculado">0 XOF</div>
             </div>
 
+            <!-- SEÇÃO DE PAGAMENTOS -->
             <div style="background:#f8fafc; border:1px dashed #cbd5e1; padding:12px; border-radius:8px; margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <label style="font-size:11px; font-weight:bold;">Forma de Pagamento:</label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <label style="font-size:11px; font-weight:bold; color:#16447C;">Forma de Pagamento:</label>
                     <button type="button" class="btn-toggle-multi" onclick="togglePagamentoMultiploCheckin()">➕ Pagamento Múltiplo</button>
                 </div>
 
+                <!-- PAGAMENTO 1 -->
                 <div class="form-row">
                     <div class="form-group">
                         <select id="chkPayMethod1">
                             <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
                             <option value="Orange Money">Orange Money</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
+                            <option value="Pagamento por Cartão">Pagamento por Cartão</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="number" id="chkPayVal1" placeholder="Valor (XOF)">
+                        <input type="number" id="chkPayVal1" placeholder="Valor 1 (XOF)">
                     </div>
                 </div>
 
-                <!-- SEGUNDO MÉTODO DE PAGAMENTO (OPCIONAL) -->
-                <div id="divPay2Checkin" class="form-row" style="display:none;">
-                    <div class="form-group">
-                        <select id="chkPayMethod2">
-                            <option value="Orange Money">Orange Money</option>
-                            <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
-                        </select>
+                <!-- PAGAMENTOS MÚLTIPLOS (OPCIONAL 2 E 3) -->
+                <div id="divPayMultiCheckin" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="chkPayMethod2">
+                                <option value="Orange Money">Orange Money</option>
+                                <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                                <option value="Pagamento por Cartão">Pagamento por Cartão</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="chkPayVal2" placeholder="Valor 2 (XOF)">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="number" id="chkPayVal2" placeholder="Valor Múltiplo (XOF)">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="chkPayMethod3">
+                                <option value="Pagamento por Cartão">Pagamento por Cartão</option>
+                                <option value="Orange Money">Orange Money</option>
+                                <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="chkPayVal3" placeholder="Valor 3 (XOF)">
+                        </div>
                     </div>
                 </div>
 
@@ -505,38 +519,53 @@
                 <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtTotalReservaCalculado">0 XOF</div>
             </div>
 
+            <!-- SEÇÃO DE PAGAMENTOS DE RESERVA -->
             <div style="background:#f8fafc; border:1px dashed #cbd5e1; padding:12px; border-radius:8px; margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <label style="font-size:11px; font-weight:bold;">Sinal / Adiantamento Pago:</label>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <label style="font-size:11px; font-weight:bold; color:#16447C;">Sinal / Adiantamento Pago:</label>
                     <button type="button" class="btn-toggle-multi" onclick="togglePagamentoMultiploReserva()">➕ Pagamento Múltiplo</button>
                 </div>
 
+                <!-- PAGAMENTO 1 -->
                 <div class="form-row">
                     <div class="form-group">
                         <select id="resPayMethod1">
                             <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
                             <option value="Orange Money">Orange Money</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
+                            <option value="Pagamento por Cartão">Pagamento por Cartão</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="number" id="resPayVal1" placeholder="Valor Pago (XOF)">
+                        <input type="number" id="resPayVal1" placeholder="Valor 1 (XOF)">
                     </div>
                 </div>
 
-                <!-- SEGUNDO MÉTODO DE PAGAMENTO NA RESERVA -->
-                <div id="divPay2Reserva" class="form-row" style="display:none;">
-                    <div class="form-group">
-                        <select id="resPayMethod2">
-                            <option value="Orange Money">Orange Money</option>
-                            <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
-                        </select>
+                <!-- PAGAMENTOS MÚLTIPLOS RESERVA (2 E 3) -->
+                <div id="divPayMultiReserva" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="resPayMethod2">
+                                <option value="Orange Money">Orange Money</option>
+                                <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                                <option value="Pagamento por Cartão">Pagamento por Cartão</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="resPayVal2" placeholder="Valor 2 (XOF)">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="number" id="resPayVal2" placeholder="Valor Múltiplo (XOF)">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="resPayMethod3">
+                                <option value="Pagamento por Cartão">Pagamento por Cartão</option>
+                                <option value="Orange Money">Orange Money</option>
+                                <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" id="resPayVal3" placeholder="Valor 3 (XOF)">
+                        </div>
                     </div>
                 </div>
 
@@ -663,15 +692,14 @@
             const agendamentos = carregarAgendamentos();
 
             let cLivre = 0, cOcupado = 0, cLimpeza = 0, cManutencao = 0;
-            let totCash = 0, totOrange = 0, totMulti = 0, totDep = 0;
+            let totCash = 0, totOrange = 0, totCartao = 0;
 
             const somarPagamento = (metodo, valor) => {
                 const v = parseFloat(valor) || 0;
                 if (!metodo || v <= 0) return;
                 if (metodo.includes('Cash')) totCash += v;
                 else if (metodo.includes('Orange')) totOrange += v;
-                else if (metodo.includes('Multibanco')) totMulti += v;
-                else if (metodo.includes('Depósito')) totDep += v;
+                else if (metodo.includes('Cartão') || metodo.includes('Multibanco')) totCartao += v;
             };
 
             // Somar pagamentos dos Check-ins Ativos
@@ -682,12 +710,14 @@
 
                 somarPagamento(q.pay_method1, q.val_pago1);
                 somarPagamento(q.pay_method2, q.val_pago2);
+                somarPagamento(q.pay_method3, q.val_pago3);
             });
 
             // Somar adiantamentos das Reservas
             agendamentos.forEach(a => {
                 somarPagamento(a.pay_method1, a.val_pago1);
                 somarPagamento(a.pay_method2, a.val_pago2);
+                somarPagamento(a.pay_method3, a.val_pago3);
             });
 
             cLivre = 52 - (cOcupado + cLimpeza + cManutencao);
@@ -697,12 +727,11 @@
             document.getElementById('cntLimpeza').innerText = cLimpeza;
             document.getElementById('cntManutencao').innerText = cManutencao;
 
-            const totalGeral = totCash + totOrange + totMulti + totDep;
+            const totalGeral = totCash + totOrange + totCartao;
             document.getElementById('txtReceitaTotal').innerText = totalGeral.toLocaleString() + ' XOF';
             document.getElementById('txtReceitaCash').innerText = totCash.toLocaleString() + ' XOF';
             document.getElementById('txtReceitaOrange').innerText = totOrange.toLocaleString() + ' XOF';
-            document.getElementById('txtReceitaMulti').innerText = totMulti.toLocaleString() + ' XOF';
-            document.getElementById('txtReceitaDep').innerText = totDep.toLocaleString() + ' XOF';
+            document.getElementById('txtReceitaCartao').innerText = totCartao.toLocaleString() + ' XOF';
 
             renderizarQuartos(mapa);
         }
@@ -745,13 +774,13 @@
         }
 
         function togglePagamentoMultiploCheckin() {
-            const div = document.getElementById('divPay2Checkin');
-            div.style.display = (div.style.display === 'none' || div.style.display === '') ? 'flex' : 'none';
+            const div = document.getElementById('divPayMultiCheckin');
+            div.style.display = (div.style.display === 'none' || div.style.display === '') ? 'block' : 'none';
         }
 
         function togglePagamentoMultiploReserva() {
-            const div = document.getElementById('divPay2Reserva');
-            div.style.display = (div.style.display === 'none' || div.style.display === '') ? 'flex' : 'none';
+            const div = document.getElementById('divPayMultiReserva');
+            div.style.display = (div.style.display === 'none' || div.style.display === '') ? 'block' : 'none';
         }
 
         function abrirModalCheckin(numQuarto) {
@@ -772,13 +801,16 @@
                 document.getElementById('chkPayMethod1').value = data.pay_method1 || 'Cash (Dinheiro)';
                 document.getElementById('chkPayVal1').value = data.val_pago1 || '';
                 
-                if (data.val_pago2 && parseFloat(data.val_pago2) > 0) {
-                    document.getElementById('divPay2Checkin').style.display = 'flex';
+                if ((data.val_pago2 && parseFloat(data.val_pago2) > 0) || (data.val_pago3 && parseFloat(data.val_pago3) > 0)) {
+                    document.getElementById('divPayMultiCheckin').style.display = 'block';
                     document.getElementById('chkPayMethod2').value = data.pay_method2 || 'Orange Money';
                     document.getElementById('chkPayVal2').value = data.val_pago2 || '';
+                    document.getElementById('chkPayMethod3').value = data.pay_method3 || 'Pagamento por Cartão';
+                    document.getElementById('chkPayVal3').value = data.val_pago3 || '';
                 } else {
-                    document.getElementById('divPay2Checkin').style.display = 'none';
+                    document.getElementById('divPayMultiCheckin').style.display = 'none';
                     document.getElementById('chkPayVal2').value = '';
+                    document.getElementById('chkPayVal3').value = '';
                 }
 
                 document.getElementById('chkStatusPagamento').value = data.status_pagamento || 'Pago';
@@ -791,7 +823,8 @@
                 document.getElementById('chkValorDiaria').value = '';
                 document.getElementById('chkPayVal1').value = '';
                 document.getElementById('chkPayVal2').value = '';
-                document.getElementById('divPay2Checkin').style.display = 'none';
+                document.getElementById('chkPayVal3').value = '';
+                document.getElementById('divPayMultiCheckin').style.display = 'none';
                 document.getElementById('chkStatusPagamento').value = 'Pago';
                 document.getElementById('btnCheckout').style.display = 'none';
             }
@@ -838,6 +871,8 @@
                 val_pago1: parseFloat(document.getElementById('chkPayVal1').value) || 0,
                 pay_method2: document.getElementById('chkPayMethod2').value,
                 val_pago2: parseFloat(document.getElementById('chkPayVal2').value) || 0,
+                pay_method3: document.getElementById('chkPayMethod3').value,
+                val_pago3: parseFloat(document.getElementById('chkPayVal3').value) || 0,
                 status_pagamento: document.getElementById('chkStatusPagamento').value
             };
 
@@ -870,7 +905,8 @@
             
             const p1 = parseFloat(document.getElementById('chkPayVal1').value) || 0;
             const p2 = parseFloat(document.getElementById('chkPayVal2').value) || 0;
-            const totPago = p1 + p2;
+            const p3 = parseFloat(document.getElementById('chkPayVal3').value) || 0;
+            const totPago = p1 + p2 + p3;
 
             const elemento = document.createElement('div');
             elemento.style.padding = '20px';
@@ -884,8 +920,11 @@
                 <p><strong>Telefone:</strong> ${document.getElementById('chkTelefone').value}</p>
                 <p><strong>Quarto:</strong> ${quartoAtual}</p>
                 <p><strong>Período:</strong> ${document.getElementById('chkDataEntrada').value} até ${document.getElementById('chkDataSaida').value}</p>
+                <br>
                 <p><strong>Forma Pagamento 1:</strong> ${document.getElementById('chkPayMethod1').value} (${p1.toLocaleString()} XOF)</p>
                 ${p2 > 0 ? `<p><strong>Forma Pagamento 2:</strong> ${document.getElementById('chkPayMethod2').value} (${p2.toLocaleString()} XOF)</p>` : ''}
+                ${p3 > 0 ? `<p><strong>Forma Pagamento 3:</strong> ${document.getElementById('chkPayMethod3').value} (${p3.toLocaleString()} XOF)</p>` : ''}
+                <hr style="margin:10px 0;">
                 <p><strong>Total Pago:</strong> ${totPago.toLocaleString()} XOF</p>
                 <p><strong>Status Pagamento:</strong> ${document.getElementById('chkStatusPagamento').value}</p>
             `;
@@ -897,7 +936,7 @@
             const mapa = carregarDadosQuartos();
             let csv = 'Quarto,Status,Hospede,Telefone,Entrada,Saida,TotalPago,StatusPagamento\n';
             Object.values(mapa).forEach(q => {
-                const tot = (parseFloat(q.val_pago1) || 0) + (parseFloat(q.val_pago2) || 0);
+                const tot = (parseFloat(q.val_pago1) || 0) + (parseFloat(q.val_pago2) || 0) + (parseFloat(q.val_pago3) || 0);
                 csv += `"${q.quarto}","${q.status}","${q.hospede || ''}","${q.telefone || ''}","${q.data_entrada || ''}","${q.data_saida || ''}","${tot}","${q.status_pagamento || ''}"\n`;
             });
 
@@ -925,7 +964,8 @@
             document.getElementById('resValorDiaria').value = '';
             document.getElementById('resPayVal1').value = '';
             document.getElementById('resPayVal2').value = '';
-            document.getElementById('divPay2Reserva').style.display = 'none';
+            document.getElementById('resPayVal3').value = '';
+            document.getElementById('divPayMultiReserva').style.display = 'none';
             document.getElementById('resObs').value = '';
 
             calcularEstadiaReserva();
@@ -966,6 +1006,8 @@
                 val_pago1: parseFloat(document.getElementById('resPayVal1').value) || 0,
                 pay_method2: document.getElementById('resPayMethod2').value,
                 val_pago2: parseFloat(document.getElementById('resPayVal2').value) || 0,
+                pay_method3: document.getElementById('resPayMethod3').value,
+                val_pago3: parseFloat(document.getElementById('resPayVal3').value) || 0,
                 status_pagamento: document.getElementById('resStatusPagamento').value,
                 obs: document.getElementById('resObs').value
             });
@@ -986,7 +1028,7 @@
             }
             let html = '';
             lista.forEach(a => {
-                const totPago = (parseFloat(a.val_pago1) || 0) + (parseFloat(a.val_pago2) || 0);
+                const totPago = (parseFloat(a.val_pago1) || 0) + (parseFloat(a.val_pago2) || 0) + (parseFloat(a.val_pago3) || 0);
                 html += `<tr>
                     <td><strong>${a.hospede}</strong><br><small>${a.telefone || ''}</small></td>
                     <td>${a.quarto}</td>
