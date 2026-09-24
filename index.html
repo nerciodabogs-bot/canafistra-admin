@@ -648,7 +648,6 @@
     <script>
         // ==========================================
         // CONFIGURAÇÃO DO FIREBASE (MULTIDISPOSITIVOS)
-        // Chaves atualizadas para o projeto Canafistra-Resort
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyCFgR361qHDg15d1EXypSRY3KuuThlqFog",
@@ -697,20 +696,17 @@
                 badge.className = "sync-badge sync-online";
                 badge.innerText = "🌐 Sincronizado em Tempo Real (Multi-Dispositivos)";
 
-                // Ouvir alterações de quartos em tempo real
                 db.ref('quartos').on('value', snap => {
                     cacheQuartos = snap.val() || {};
                     carregarPainel();
                 });
 
-                // Ouvir alterações de agendamentos em tempo real
                 db.ref('agendamentos').on('value', snap => {
                     const val = snap.val();
                     cacheAgendamentos = val ? (Array.isArray(val) ? val : Object.values(val)) : [];
                     carregarPainel();
                 });
 
-                // Ouvir alterações do histórico em tempo real
                 db.ref('historico').on('value', snap => {
                     const val = snap.val();
                     cacheHistorico = val ? (Array.isArray(val) ? val : Object.values(val)) : [];
@@ -807,7 +803,6 @@
                 else if (metodo.includes('Cartão') || metodo.includes('Multibanco')) totCartao += v;
             };
 
-            // 1. Somar pagamentos dos Check-ins Ativos
             Object.values(mapa).forEach(q => {
                 if (q.status === 'Ocupado') cOcupado++;
                 else if (q.status === 'Limpeza') cLimpeza++;
@@ -818,14 +813,12 @@
                 somarPagamento(q.pay_method3, q.val_pago3);
             });
 
-            // 2. Somar adiantamentos das Reservas
             agendamentos.forEach(a => {
                 somarPagamento(a.pay_method1, a.val_pago1);
                 somarPagamento(a.pay_method2, a.val_pago2);
                 somarPagamento(a.pay_method3, a.val_pago3);
             });
 
-            // 3. Somar HISTÓRICO ACUMULADO de Check-outs já realizados
             historico.forEach(h => {
                 somarPagamento(h.pay_method1, h.val_pago1);
                 somarPagamento(h.pay_method2, h.val_pago2);
@@ -895,6 +888,7 @@
             div.style.display = (div.style.display === 'none' || div.style.display === '') ? 'block' : 'none';
         }
 
+        // FUNÇÃO ABRIR MODAL CHECKIN CORRIGIDA PARA LIMPAR CAMPOS DE QUARTOS LIVRES
         function abrirModalCheckin(numQuarto) {
             quartoAtual = numQuarto;
             document.getElementById('chkTitulo').innerText = 'Gestão: Quarto ' + numQuarto;
@@ -927,6 +921,8 @@
                     document.getElementById('chkNome').value = data.hospede || '';
                     document.getElementById('chkTelefone').value = data.telefone || '';
                     document.getElementById('chkHora').value = data.hora || '14:00';
+                    document.getElementById('chkDataEntrada').value = data.data_entrada || new Date().toISOString().split('T')[0];
+                    document.getElementById('chkDataSaida').value = data.data_saida || '';
                     document.getElementById('chkNacionalidade').value = data.nacionalidade || '';
                     document.getElementById('chkTipoDoc').value = data.tipo_doc || 'Bilhete de Identidade';
                     document.getElementById('chkNoDoc').value = data.no_doc || '';
@@ -949,8 +945,10 @@
                     document.getElementById('chkStatusPagamento').value = data.status_pagamento || 'Pago';
                     document.getElementById('btnCheckout').style.display = 'inline-flex';
                 } else {
+                    // QUARTO LIVRE: LIMPA TOTALMENTE OS DADOS DO FORMULÁRIO ANTERIOR
                     document.getElementById('chkNome').value = '';
                     document.getElementById('chkTelefone').value = '';
+                    document.getElementById('chkHora').value = '14:00';
                     document.getElementById('chkNacionalidade').value = '';
                     document.getElementById('chkNoDoc').value = '';
                     document.getElementById('chkValorDiaria').value = '';
@@ -960,6 +958,11 @@
                     document.getElementById('divPayMultiCheckin').style.display = 'none';
                     document.getElementById('chkStatusPagamento').value = 'Pago';
                     document.getElementById('btnCheckout').style.display = 'none';
+
+                    const hoje = new Date().toISOString().split('T')[0];
+                    const amanha = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+                    document.getElementById('chkDataEntrada').value = hoje;
+                    document.getElementById('chkDataSaida').value = amanha;
                 }
             }
 
@@ -979,8 +982,9 @@
             const total = diffNoites * diaria;
             document.getElementById('txtTotalEstadiaCalculado').innerText = total.toLocaleString() + ' XOF';
             
-            if (!document.getElementById('chkPayVal1').value || parseFloat(document.getElementById('chkPayVal1').value) === 0) {
-                document.getElementById('chkPayVal1').value = total;
+            const valPago1Input = document.getElementById('chkPayVal1');
+            if (!valPago1Input.value || parseFloat(valPago1Input.value) === 0) {
+                valPago1Input.value = total;
             }
         }
 
@@ -1123,13 +1127,11 @@
 
             let csv = 'Quarto,Status,Hospede,Telefone,Entrada,Saida,TotalPago,StatusPagamento\n';
             
-            // Quartos Ativos
             Object.values(mapa).forEach(q => {
                 const tot = (parseFloat(q.val_pago1) || 0) + (parseFloat(q.val_pago2) || 0) + (parseFloat(q.val_pago3) || 0);
                 csv += `"${q.quarto}","${q.status}","${q.hospede || ''}","${q.telefone || ''}","${q.data_entrada || ''}","${q.data_saida || ''}","${tot}","${q.status_pagamento || ''}"\n`;
             });
 
-            // Histórico de Checkouts
             historico.forEach(h => {
                 const tot = (parseFloat(h.val_pago1) || 0) + (parseFloat(h.val_pago2) || 0) + (parseFloat(h.val_pago3) || 0);
                 csv += `"${h.quarto}","Concluido (Checkout)","${h.hospede || ''}","","","${h.data_checkout}","${tot}","Pago"\n`;
