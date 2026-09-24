@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Canafistra Resort</title>
     
-    <!-- SDK do Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Biblioteca para Geração de PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- FullCalendar para Calendário de Reservas -->
@@ -51,7 +48,7 @@
         }
 
         .login-card {
-            background: #ffffff; /* Fundo do login alterado para branco */
+            background: #ffffff;
             border: 1px solid #e2e8f0;
             padding: 35px 25px;
             border-radius: 16px;
@@ -88,11 +85,6 @@
             outline: none;
         }
 
-        .login-card input:focus {
-            border-color: var(--canafistra-gold);
-            background: #ffffff;
-        }
-
         .login-card button {
             width: 100%;
             padding: 12px;
@@ -103,11 +95,6 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .login-card button:hover {
-            background-color: #e0b642;
         }
 
         /* CONTEÚDO PRINCIPAL */
@@ -117,7 +104,6 @@
             margin: 0 auto;
         }
 
-        /* CABEÇALHO BRANCO INTEGRADO AO LOGÓTIPO */
         .header-container {
             background-color: #ffffff;
             border-radius: 14px;
@@ -129,12 +115,11 @@
         }
 
         .logo-canafistra {
-            max-width: 240px;
+            max-width: 220px;
             width: 100%;
             height: auto;
             margin: 0 auto 10px auto;
             display: block;
-            object-fit: contain;
         }
 
         .title-row {
@@ -143,15 +128,12 @@
             justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 5px;
         }
 
         .title-row h1 {
             color: var(--canafistra-gold);
             font-size: 24px;
             font-weight: 800;
-            margin: 0;
-            letter-spacing: 1px;
         }
 
         .subtitle {
@@ -159,7 +141,6 @@
             font-size: 12px;
             margin-top: 4px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .role-badge {
@@ -169,11 +150,8 @@
             border-radius: 6px;
             font-size: 11px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        /* BARRA DE PESQUISA OVAL (PILL) */
         .busca-wrapper {
             display: flex;
             justify-content: center;
@@ -190,15 +168,8 @@
             outline: none;
             text-align: center;
             background-color: #ffffff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
-            color: #334155;
         }
 
-        #campoBusca:focus {
-            border-color: var(--canafistra-blue);
-        }
-
-        /* BOTÕES DE AÇÃO */
         .actions-container {
             display: flex;
             flex-wrap: wrap;
@@ -218,7 +189,6 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
 
         .btn-blue { background-color: var(--canafistra-blue); }
@@ -229,7 +199,6 @@
         .btn-red { background-color: #dc2626; }
         .btn-gray { background-color: #475569; }
 
-        /* DASHBOARD GRID */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -241,24 +210,17 @@
             background: #ffffff;
             padding: 18px;
             border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
             border: 1px solid #e2e8f0;
         }
 
         .card h3 {
-            margin-top: 0;
             color: var(--canafistra-blue);
             font-size: 15px;
-            font-weight: 700;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 10px;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
         }
 
-        /* STATUS DE OCUPAÇÃO */
         .status-summary {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -268,60 +230,15 @@
 
         .status-box {
             background: #f8fafc;
-            padding: 12px 8px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid #f1f5f9;
         }
 
-        .status-box span {
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
         .status-box .num {
-            font-size: 24px;
-            font-weight: 800;
-            color: #1e293b;
-            margin-top: 2px;
-        }
-
-        .total-quartos-banner {
-            background-color: #f0fdf4;
-            color: #166534;
-            font-weight: 800;
-            font-size: 12px;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 12px;
-            letter-spacing: 0.5px;
-            border: 1px solid #bbf7d0;
-        }
-
-        /* RECEITA & DÍVIDAS */
-        .finance-top-box {
-            background-color: #f0fdf4;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            margin-bottom: 10px;
-            border: 1px solid #bbf7d0;
-        }
-
-        .finance-top-box span {
-            font-size: 11px;
-            font-weight: 700;
-            color: #166534;
-            text-transform: uppercase;
-        }
-
-        .finance-top-box .amount {
             font-size: 22px;
             font-weight: 800;
-            color: #15803d;
-            margin-top: 2px;
+            color: #1e293b;
         }
 
         .finance-grid {
@@ -333,142 +250,66 @@
 
         .finance-box {
             background: #f8fafc;
-            padding: 10px;
+            padding: 8px;
             border-radius: 8px;
             font-size: 11px;
-            color: #64748b;
             border: 1px solid #f1f5f9;
         }
 
-        .finance-box strong {
-            display: block;
-            font-size: 13px;
-            font-weight: 800;
-            color: #1e293b;
-            margin-top: 2px;
-        }
-
-        .finance-bottom-box {
-            background-color: #fffbeb;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            margin-top: 10px;
-            border: 1px solid #fef3c7;
-        }
-
-        .finance-bottom-box span {
-            font-size: 11px;
-            font-weight: 800;
-            color: #b45309;
-            text-transform: uppercase;
-        }
-
-        .finance-bottom-box .amount {
-            font-size: 20px;
-            font-weight: 800;
-            color: #d97706;
-            margin-top: 2px;
-        }
-
-        /* LEGENDA DE CORES */
         .legend {
             background: #ffffff;
             border-radius: 10px;
-            padding: 10px 16px;
+            padding: 10px;
             display: flex;
             justify-content: center;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
             font-size: 12px;
             font-weight: 700;
             border: 1px solid #e2e8f0;
         }
 
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .color-box { width: 14px; height: 14px; border-radius: 3px; }
 
-        .color-box {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            display: inline-block;
-        }
+        .bg-livre { background-color: #86efac !important; color: #14532d !important; }
+        .bg-ocupado { background-color: #fca5a5 !important; color: #7f1d1d !important; }
+        .bg-limpeza { background-color: #fde047 !important; color: #713f12 !important; }
+        .bg-manutencao { background-color: #94a3b8 !important; color: #0f172a !important; }
 
-        /* CORES DA INTERFACE */
-        .bg-livre {
-            background-color: #86efac !important;
-            color: #14532d !important;
-        }
-
-        .bg-ocupado {
-            background-color: #fca5a5 !important;
-            color: #7f1d1d !important;
-        }
-
-        .bg-limpeza {
-            background-color: #fde047 !important;
-            color: #713f12 !important;
-        }
-
-        .bg-manutencao {
-            background-color: #94a3b8 !important;
-            color: #0f172a !important;
-        }
-
-        /* GRID DE QUARTOS */
         .room-section {
             background: #ffffff;
             border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 18px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            padding: 16px;
+            margin-bottom: 16px;
             border: 1px solid #e2e8f0;
         }
 
         .room-section h3 {
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 15px;
             color: var(--canafistra-blue);
-            margin-bottom: 14px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .room-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            gap: 8px;
         }
 
         .room-card {
-            padding: 12px 4px;
+            padding: 10px 4px;
             border-radius: 8px;
             text-align: center;
             font-weight: 800;
             font-size: 13px;
             cursor: pointer;
-            user-select: none;
-            transition: transform 0.1s;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        .room-card:active {
-            transform: scale(0.95);
-        }
-
-        /* MODAIS */
         .modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.7);
             display: none;
             align-items: center;
@@ -479,108 +320,34 @@
 
         .modal-content {
             background: #ffffff;
-            padding: 22px;
+            padding: 20px;
             border-radius: 12px;
-            max-width: 520px;
+            max-width: 500px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .modal-content h3 {
-            margin-top: 0;
-            font-size: 18px;
-            color: var(--canafistra-blue);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .close-btn { float: right; cursor: pointer; font-size: 20px; font-weight: bold; }
 
-        .close-btn {
-            cursor: pointer;
-            color: #94a3b8;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .form-row .form-group {
-            flex: 1;
-            margin-bottom: 0;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: #334155;
-        }
-
+        .form-row { display: flex; gap: 8px; margin-bottom: 10px; }
+        .form-group { flex: 1; margin-bottom: 10px; }
+        .form-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px; }
         .form-group input, .form-group select {
-            width: 100%;
-            padding: 9px 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 13px;
-            background-color: #ffffff;
-            outline: none;
+            width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;
         }
 
-        .split-pay-box {
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            padding: 12px;
-            border-radius: 8px;
-            margin-top: 10px;
-            margin-bottom: 12px;
-        }
-
-        /* TABELAS */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 12px;
-        }
-
-        th, td {
-            padding: 9px 8px;
-            border: 1px solid #e2e8f0;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f1f5f9;
-            color: #334155;
-            font-weight: 700;
-        }
-
-        /* CALENDÁRIO */
-        #calendar {
-            max-width: 100%;
-            height: 420px;
-            margin-top: 10px;
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+        th, td { padding: 8px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background: #f1f5f9; }
+        #calendar { height: 400px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- MODAL DE LOGIN OVERLAY BRANCO -->
+    <!-- MODAL DE LOGIN OVERLAY -->
     <div id="modalLogin" class="modal-login">
         <div class="login-card">
-            <!-- LOGÓTIPO OFICIAL DA CANAFISTRA -->
             <img src="https://i.postimg.cc/RCLJftjy/Logotipo-Canafistra-Site.png" alt="Canafistra Resort" class="logo-canafistra">
             <h3>Canafistra Resort</h3>
             <p>Introduza a palavra-passe para aceder ao painel</p>
@@ -592,7 +359,6 @@
     <!-- CONTEÚDO PRINCIPAL DO PAINEL -->
     <div id="mainContent" class="main-content">
         
-        <!-- CABEÇALHO BRANCO COM LOGÓTIPO OFICIAL -->
         <div class="header-container">
             <img src="https://i.postimg.cc/RCLJftjy/Logotipo-Canafistra-Site.png" alt="Canafistra Resort" class="logo-canafistra">
             <div class="title-row">
@@ -602,12 +368,10 @@
             <div class="subtitle">Painel de Gestão Operacional & Reservas</div>
         </div>
 
-        <!-- BARRA DE PESQUISA OVAL -->
         <div class="busca-wrapper">
             <input type="text" id="campoBusca" placeholder="🔍 Pesquisar por hóspede ou nº do quarto..." onkeyup="filtrarQuartosEBusca()">
         </div>
 
-        <!-- BOTÕES DE AÇÃO -->
         <div class="actions-container">
             <button class="btn-action btn-blue" onclick="abrirModalReserva()">📅 Nova Reserva</button>
             <button class="btn-action btn-purple" onclick="abrirModalCalendario()">🗓️ Calendário</button>
@@ -616,9 +380,7 @@
             <button class="btn-action btn-gray" onclick="sair()">🔒 Sair</button>
         </div>
 
-        <!-- DASHBOARD DE OCUPAÇÃO E FINANCEIRO -->
         <div class="dashboard-grid">
-            <!-- STATUS DE OCUPAÇÃO -->
             <div class="card">
                 <h3>📊 Status de Ocupação</h3>
                 <div class="status-summary">
@@ -627,32 +389,23 @@
                     <div class="status-box"><span style="color:#ca8a04">LIMPEZA</span><div class="num" id="cntLimpeza">0</div></div>
                     <div class="status-box"><span style="color:#475569">MANUTENÇÃO</span><div class="num" id="cntManutencao">0</div></div>
                 </div>
-                <div class="total-quartos-banner">
-                    TOTAL QUARTOS: <span id="cntTotalQuartos">52</span>
-                </div>
             </div>
 
-            <!-- RECEITA & DÍVIDAS -->
             <div class="card admin-only">
                 <h3>💰 Receita & Dívidas</h3>
-                <div class="finance-top-box">
-                    <span>TOTAL ARRECADADO</span>
-                    <div class="amount" id="txtReceitaTotal">0 XOF</div>
+                <div style="text-align:center; background:#f0fdf4; padding:10px; border-radius:8px; margin-bottom:8px;">
+                    <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL ARRECADADO</span>
+                    <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtReceitaTotal">0 XOF</div>
                 </div>
                 <div class="finance-grid">
-                    <div class="finance-box">Dinheiro<strong id="txtReceitaCash">0 XOF</strong></div>
-                    <div class="finance-box">Orange M.<strong id="txtReceitaOrange">0 XOF</strong></div>
-                    <div class="finance-box">Multibanco<strong id="txtReceitaMulti">0 XOF</strong></div>
-                    <div class="finance-box">Depósito<strong id="txtReceitaDep">0 XOF</strong></div>
-                </div>
-                <div class="finance-bottom-box">
-                    <span>TOTAL EM DÍVIDAS</span>
-                    <div class="amount" id="txtTotalDivida">0 XOF</div>
+                    <div class="finance-box">Cash<br><strong id="txtReceitaCash">0 XOF</strong></div>
+                    <div class="finance-box">Orange<br><strong id="txtReceitaOrange">0 XOF</strong></div>
+                    <div class="finance-box">Multi<br><strong id="txtReceitaMulti">0 XOF</strong></div>
+                    <div class="finance-box">Depósito<br><strong id="txtReceitaDep">0 XOF</strong></div>
                 </div>
             </div>
         </div>
 
-        <!-- LEGENDAS DE CORES -->
         <div class="legend">
             <div class="legend-item"><span class="color-box bg-livre"></span> Livre</div>
             <div class="legend-item"><span class="color-box bg-ocupado"></span> Ocupado</div>
@@ -660,15 +413,14 @@
             <div class="legend-item"><span class="color-box bg-manutencao"></span> Manutenção</div>
         </div>
 
-        <!-- GRID COMPLETA DE QUARTOS -->
         <div id="listaBlocos"></div>
     </div>
 
-    <!-- MODAL DE CHECK-IN COMPLETO -->
+    <!-- MODAL DE CHECK-IN -->
     <div id="modalCheckin" class="modal">
         <div class="modal-content">
             <h3><span id="chkTitulo">Check-in: Quarto</span> <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
-            <hr style="border:0; border-top:1px solid #eee; margin-bottom:12px;">
+            <hr style="margin:10px 0;">
             
             <div class="form-group">
                 <label>Nome Completo do Hóspede:</label>
@@ -681,18 +433,18 @@
                     <input type="text" id="chkTelefone" placeholder="+245 ...">
                 </div>
                 <div class="form-group">
-                    <label>Hora de Chegada:</label>
+                    <label>Hora Chegada:</label>
                     <input type="time" id="chkHora" value="14:00">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>Data de Entrada:</label>
+                    <label>Data Entrada:</label>
                     <input type="date" id="chkDataEntrada" onchange="calcularEstadia()">
                 </div>
                 <div class="form-group">
-                    <label>Data Saída Prevista:</label>
+                    <label>Data Saída:</label>
                     <input type="date" id="chkDataSaida" onchange="calcularEstadia()">
                 </div>
             </div>
@@ -703,41 +455,38 @@
                     <input type="text" id="chkNacionalidade" placeholder="Ex: Guineense">
                 </div>
                 <div class="form-group">
-                    <label>Tipo de Documento:</label>
+                    <label>Tipo Documento:</label>
                     <select id="chkTipoDoc">
-                        <option value="Bilhete de Identidade (BI)">Bilhete de Identidade (BI)</option>
+                        <option value="BI">Bilhete de Identidade (BI)</option>
                         <option value="Passaporte">Passaporte</option>
-                        <option value="Carta de Condução">Carta de Condução</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Nº do Documento:</label>
-                <input type="text" id="chkNoDoc" placeholder="Ex: A1234567">
+                <input type="text" id="chkNoDoc" placeholder="Ex: 00374416">
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>Valor da Diária (XOF):</label>
+                    <label>Valor Diária (XOF):</label>
                     <input type="number" id="chkValorDiaria" placeholder="25000" oninput="calcularEstadia()">
                 </div>
                 <div class="form-group">
-                    <label>Total de Noites:</label>
+                    <label>Total Noites:</label>
                     <input type="number" id="chkTotalNoites" value="1" readonly style="background:#f1f5f9;">
                 </div>
             </div>
 
-            <div style="background:#f0fdf4; padding:10px; border-radius:6px; text-align:center; margin-bottom:12px; border:1px solid #bbf7d0;">
+            <div style="background:#f0fdf4; padding:10px; border-radius:6px; text-align:center; margin-bottom:12px;">
                 <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL ESTADIA (XOF):</span>
-                <div style="font-size:22px; font-weight:bold; color:#15803d;" id="txtTotalEstadiaCalculado">0</div>
+                <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtTotalEstadiaCalculado">0</div>
             </div>
 
-            <!-- PAGAMENTO MISTO -->
-            <div class="split-pay-box">
-                <label style="font-size:12px; font-weight:bold; color:#2c3e50;">Formas de Pagamento (Misto):</label>
-                
-                <div class="form-row" style="margin-top:6px;">
+            <div style="background:#f8fafc; border:1px dashed #cbd5e1; padding:10px; border-radius:8px; margin-bottom:12px;">
+                <label style="font-size:11px; font-weight:bold;">Forma de Pagamento:</label>
+                <div class="form-row" style="margin-top:4px;">
                     <div class="form-group">
                         <select id="chkPayMethod1">
                             <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
@@ -747,31 +496,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="number" id="chkPayVal1" placeholder="Valor 1 (XOF)">
+                        <input type="number" id="chkPayVal1" placeholder="Valor (XOF)">
                     </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <select id="chkPayMethod2">
-                            <option value="">-- Nenhuma (2ª Forma) --</option>
-                            <option value="Orange Money">Orange Money</option>
-                            <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="chkPayVal2" placeholder="Valor 2 (XOF)">
-                    </div>
-                </div>
-
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Status do Pagamento:</label>
-                    <select id="chkStatusPagamento">
-                        <option value="Pago">Pago</option>
-                        <option value="Pendente">Pendente</option>
-                    </select>
                 </div>
             </div>
 
@@ -786,149 +512,78 @@
         </div>
     </div>
 
-    <!-- MODAL NOVA RESERVA -->
+    <!-- MODAL RESERVA -->
     <div id="modalReserva" class="modal">
         <div class="modal-content">
-            <h3>📅 Agendar Nova Reserva <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
-            <hr style="border:0; border-top:1px solid #eee; margin-bottom:12px;">
-            
+            <h3>📅 Nova Reserva <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
+            <hr style="margin:10px 0;">
             <div class="form-group">
                 <label>Nome do Hóspede:</label>
-                <input type="text" id="resNome" placeholder="Ex: Maria Santos">
+                <input type="text" id="resNome">
             </div>
-
             <div class="form-row">
-                <div class="form-group">
-                    <label>Data Entrada:</label>
-                    <input type="date" id="resDataEntrada" onchange="verificarDisponibilidadeReserva()">
-                </div>
-                <div class="form-group">
-                    <label>Data Saída:</label>
-                    <input type="date" id="resDataSaida" onchange="verificarDisponibilidadeReserva()">
-                </div>
+                <div class="form-group"><label>Entrada:</label><input type="date" id="resDataEntrada"></div>
+                <div class="form-group"><label>Saída:</label><input type="date" id="resDataSaida"></div>
             </div>
-
             <div class="form-group">
-                <label>Quartos Livres (Anti-Overbooking):</label>
-                <select id="resQuarto">
-                    <option value="">Selecione as datas primeiro...</option>
-                </select>
+                <label>Quarto:</label>
+                <select id="resQuarto"></select>
             </div>
-            
-            <div class="split-pay-box">
-                <label style="font-size: 12px; font-weight: bold;">Adiantamento / Pagamento Misto:</label>
-                <div class="form-row" style="margin-top: 5px;">
-                    <div class="form-group">
-                        <select id="resPayMethod1">
-                            <option value="Orange Money">Orange Money</option>
-                            <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="resPayVal1" placeholder="Valor 1 (XOF)">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <select id="resPayMethod2">
-                            <option value="">-- Nenhuma (2ª Forma) --</option>
-                            <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            <option value="Orange Money">Orange Money</option>
-                            <option value="Multibanco">Multibanco</option>
-                            <option value="Depósito">Depósito</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="number" id="resPayVal2" placeholder="Valor 2 (XOF)">
-                    </div>
-                </div>
-            </div>
-
-            <div style="display:flex; gap:8px; justify-content:flex-end;">
-                <button class="btn-action btn-green" onclick="salvarReserva()">Confirmar Reserva</button>
+            <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:10px;">
+                <button class="btn-action btn-green" onclick="salvarReserva()">Salvar Reserva</button>
                 <button class="btn-action btn-gray" onclick="fecharModais()">Cancelar</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL LISTA DE AGENDAMENTOS -->
+    <!-- MODAL AGENDAMENTOS -->
     <div id="modalAgendamentos" class="modal">
-        <div class="modal-content" style="max-width: 650px;">
-            <h3>📋 Lista de Agendamentos <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
-            <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Hóspede</th>
-                            <th>Quarto</th>
-                            <th>Período</th>
-                            <th>Pagamento</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbAgendamentosBody">
-                        <tr><td colspan="5" style="text-align:center;">A carregar agendamentos...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <br>
-            <button class="btn-action btn-gray" onclick="fecharModais()">Fechar</button>
+        <div class="modal-content" style="max-width: 600px;">
+            <h3>📋 Agendamentos <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
+            <table>
+                <thead><tr><th>Hóspede</th><th>Quarto</th><th>Período</th><th>Ação</th></tr></thead>
+                <tbody id="tbAgendamentosBody"></tbody>
+            </table>
         </div>
     </div>
 
-    <!-- MODAL CALENDÁRIO DE RESERVAS -->
+    <!-- MODAL CALENDÁRIO -->
     <div id="modalCalendario" class="modal">
-        <div class="modal-content" style="max-width: 720px;">
-            <h3>🗓️ Calendário de Ocupação & Reservas <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
+        <div class="modal-content" style="max-width: 680px;">
+            <h3>🗓️ Calendário <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
             <div id="calendar"></div>
-            <br>
-            <button class="btn-action btn-gray" onclick="fecharModais()">Fechar</button>
         </div>
     </div>
 
     <script>
-        // CONFIGURAÇÕES DO SUPABASE
-        const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
-        const SUPABASE_KEY = "SUA-CHAVE-ANON";
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // ESTRUTURA DOS 52 QUARTOS DO CANAFISTRA RESORT
         const ESTRUTURA_QUARTOS = [
-            {
-                categoria: "Suite Básica",
-                quartos: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7", "A-8", "A-9", "A-10"]
-            },
-            {
-                categoria: "Suite Executiva",
-                quartos: [
-                    "TG1-1", "TG1-2", "TG1-3", "TG1-4", "TG1-5", "TG1-6", "TG1-7", "TG1-8", "TG1-9", "TG1-10",
-                    "TG2-1", "TG2-2", "TG2-3", "TG2-4", "TG2-5", "TG2-6", "TG2-7", "TG2-8", "TG2-9", "TG2-10"
-                ]
-            },
-            {
-                categoria: "Suite Presidencial",
-                quartos: ["SP1", "SP2", "SP3", "SP4", "SP5"]
-            },
-            {
-                categoria: "Casa dos Sete Quartos",
-                quartos: ["B1", "B2", "B3", "B4", "B5", "B6", "B7"]
-            },
-            {
-                categoria: "Vilas",
-                quartos: ["Vila-01", "Vila-02", "Vila-03", "Vila-04"]
-            },
-            {
-                categoria: "Ilhas",
-                quartos: ["Ilha A1", "Ilha A2", "Ilha B1", "Ilha B2", "Ilha C1", "Ilha C2"]
-            }
+            { categoria: "Suite Básica", quartos: ["A-1", "A-2", "A-3", "A-4", "A-5", "A-6", "A-7", "A-8", "A-9", "A-10"] },
+            { categoria: "Suite Executiva", quartos: ["TG1-1", "TG1-2", "TG1-3", "TG1-4", "TG1-5", "TG1-6", "TG1-7", "TG1-8", "TG1-9", "TG1-10", "TG2-1", "TG2-2", "TG2-3", "TG2-4", "TG2-5", "TG2-6", "TG2-7", "TG2-8", "TG2-9", "TG2-10"] },
+            { categoria: "Suite Presidencial", quartos: ["SP1", "SP2", "SP3", "SP4", "SP5"] },
+            { categoria: "Casa dos Sete Quartos", quartos: ["B1", "B2", "B3", "B4", "B5", "B6", "B7"] },
+            { categoria: "Vilas", quartos: ["Vila-01", "Vila-02", "Vila-03", "Vila-04"] },
+            { categoria: "Ilhas", quartos: ["Ilha A1", "Ilha A2", "Ilha B1", "Ilha B2", "Ilha C1", "Ilha C2"] }
         ];
 
         let userPerfil = 'admin';
         let quartoAtual = null;
         let calendarObj = null;
-        let dadosLocaisQuartos = {};
+
+        function carregarDadosQuartos() {
+            return JSON.parse(localStorage.getItem('canafistra_quartos') || '{}');
+        }
+
+        function salvarDadosQuartos(dados) {
+            localStorage.setItem('canafistra_quartos', JSON.stringify(dados));
+        }
+
+        function carregarAgendamentos() {
+            return JSON.parse(localStorage.getItem('canafistra_agendamentos') || '[]');
+        }
+
+        function salvarAgendamentos(lista) {
+            localStorage.setItem('canafistra_agendamentos', JSON.stringify(lista));
+        }
 
         function efetuarLogin() {
             const pwd = document.getElementById('loginPassword').value.trim();
@@ -952,9 +607,7 @@
             elementosAdmin.forEach(el => el.style.display = userPerfil === 'admin' ? 'block' : 'none');
 
             const hoje = new Date().toISOString().split('T')[0];
-            const amanhaObj = new Date();
-            amanhaObj.setDate(amanhaObj.getDate() + 1);
-            const amanha = amanhaObj.toISOString().split('T')[0];
+            const amanha = new Date(Date.now() + 86400000).toISOString().split('T')[0];
 
             document.getElementById('chkDataEntrada').value = hoje;
             document.getElementById('chkDataSaida').value = amanha;
@@ -969,41 +622,26 @@
             document.getElementById('modalLogin').style.display = 'flex';
         }
 
-        async function carregarPainel() {
-            const { data, error } = await supabaseClient.from('quartos_status').select('*');
-            
+        function carregarPainel() {
+            const mapa = carregarDadosQuartos();
             let cLivre = 0, cOcupado = 0, cLimpeza = 0, cManutencao = 0;
-            let totCash = 0, totOrange = 0, totMulti = 0, totDep = 0, totDivida = 0;
-            dadosLocaisQuartos = {};
+            let totCash = 0, totOrange = 0, totMulti = 0, totDep = 0;
 
-            if (data && !error) {
-                data.forEach(q => {
-                    dadosLocaisQuartos[q.quarto] = q;
-                    if (q.status === 'Ocupado') {
-                        cOcupado++;
-                        if (q.chkStatusPagamento === 'Pendente') {
-                            totDivida += (q.total_pago || 0);
-                        }
-                    }
-                    else if (q.status === 'Limpeza') cLimpeza++;
-                    else if (q.status === 'Manutenção') cManutencao++;
-                    else cLivre++;
+            Object.values(mapa).forEach(q => {
+                if (q.status === 'Ocupado') cOcupado++;
+                else if (q.status === 'Limpeza') cLimpeza++;
+                else if (q.status === 'Manutenção') cManutencao++;
 
-                    if (q.val_pago1) somarReceita(q.pay_method1, q.val_pago1);
-                    if (q.val_pago2) somarReceita(q.pay_method2, q.val_pago2);
-                });
-            } else {
-                cLivre = 52;
-            }
+                const v = parseFloat(q.val_pago1) || 0;
+                if (q.pay_method1) {
+                    if (q.pay_method1.includes('Cash')) totCash += v;
+                    else if (q.pay_method1.includes('Orange')) totOrange += v;
+                    else if (q.pay_method1.includes('Multibanco')) totMulti += v;
+                    else if (q.pay_method1.includes('Depósito')) totDep += v;
+                }
+            });
 
-            function somarReceita(metodo, valor) {
-                const v = parseFloat(valor) || 0;
-                if (!metodo) return;
-                if (metodo.includes('Cash')) totCash += v;
-                else if (metodo.includes('Orange')) totOrange += v;
-                else if (metodo.includes('Multibanco')) totMulti += v;
-                else if (metodo.includes('Depósito')) totDep += v;
-            }
+            cLivre = 52 - (cOcupado + cLimpeza + cManutencao);
 
             document.getElementById('cntLivre').innerText = cLivre;
             document.getElementById('cntOcupado').innerText = cOcupado;
@@ -1016,9 +654,8 @@
             document.getElementById('txtReceitaOrange').innerText = totOrange.toLocaleString() + ' XOF';
             document.getElementById('txtReceitaMulti').innerText = totMulti.toLocaleString() + ' XOF';
             document.getElementById('txtReceitaDep').innerText = totDep.toLocaleString() + ' XOF';
-            document.getElementById('txtTotalDivida').innerText = totDivida.toLocaleString() + ' XOF';
 
-            renderizarQuartos(dadosLocaisQuartos);
+            renderizarQuartos(mapa);
         }
 
         function renderizarQuartos(mapa) {
@@ -1029,7 +666,6 @@
                 html += `<div class="room-section"><h3>${bloco.categoria}</h3><div class="room-grid">`;
                 bloco.quartos.forEach(num => {
                     const info = mapa[num] || { status: 'Livre' };
-                    
                     let bgClass = 'bg-livre';
                     if (info.status === 'Ocupado') bgClass = 'bg-ocupado';
                     else if (info.status === 'Limpeza') bgClass = 'bg-limpeza';
@@ -1045,27 +681,26 @@
 
         function filtrarQuartosEBusca() {
             const termo = document.getElementById('campoBusca').value.toLowerCase().trim();
+            const mapa = carregarDadosQuartos();
+
             ESTRUTURA_QUARTOS.forEach(bloco => {
                 bloco.quartos.forEach(num => {
                     const el = document.getElementById(`card-quarto-${num}`);
-                    const info = dadosLocaisQuartos[num] || {};
+                    const info = mapa[num] || {};
                     const hospede = (info.hospede || '').toLowerCase();
                     const qNum = num.toLowerCase();
 
-                    if (!termo || qNum.includes(termo) || hospede.includes(termo)) {
-                        if (el) el.style.display = 'block';
-                    } else {
-                        if (el) el.style.display = 'none';
-                    }
+                    if (el) el.style.display = (!termo || qNum.includes(termo) || hospede.includes(termo)) ? 'block' : 'none';
                 });
             });
         }
 
-        async function abrirModalCheckin(numQuarto) {
+        function abrirModalCheckin(numQuarto) {
             quartoAtual = numQuarto;
             document.getElementById('chkTitulo').innerText = 'Check-in: Quarto ' + numQuarto;
             
-            const { data } = await supabaseClient.from('quartos_status').select('*').eq('quarto', numQuarto).single();
+            const mapa = carregarDadosQuartos();
+            const data = mapa[numQuarto];
 
             if (data && data.status === 'Ocupado') {
                 document.getElementById('chkNome').value = data.hospede || '';
@@ -1075,8 +710,6 @@
                 document.getElementById('chkValorDiaria').value = data.valor_diaria || '';
                 document.getElementById('chkPayMethod1').value = data.pay_method1 || 'Cash (Dinheiro)';
                 document.getElementById('chkPayVal1').value = data.val_pago1 || '';
-                document.getElementById('chkPayMethod2').value = data.pay_method2 || '';
-                document.getElementById('chkPayVal2').value = data.val_pago2 || '';
                 document.getElementById('btnCheckout').style.display = 'inline-flex';
             } else {
                 document.getElementById('chkNome').value = '';
@@ -1085,7 +718,6 @@
                 document.getElementById('chkNoDoc').value = '';
                 document.getElementById('chkValorDiaria').value = '';
                 document.getElementById('chkPayVal1').value = '';
-                document.getElementById('chkPayVal2').value = '';
                 document.getElementById('btnCheckout').style.display = 'none';
             }
 
@@ -1110,16 +742,12 @@
             }
         }
 
-        async function confirmarCheckin() {
+        function confirmarCheckin() {
             const nome = document.getElementById('chkNome').value;
             if (!nome) { alert('Introduza o nome do hóspede!'); return; }
 
-            const pay1 = document.getElementById('chkPayMethod1').value;
-            const val1 = parseFloat(document.getElementById('chkPayVal1').value) || 0;
-            const pay2 = document.getElementById('chkPayMethod2').value;
-            const val2 = parseFloat(document.getElementById('chkPayVal2').value) || 0;
-
-            const payload = {
+            const mapa = carregarDadosQuartos();
+            mapa[quartoAtual] = {
                 quarto: quartoAtual,
                 status: 'Ocupado',
                 hospede: nome,
@@ -1130,254 +758,128 @@
                 tipo_doc: document.getElementById('chkTipoDoc').value,
                 no_doc: document.getElementById('chkNoDoc').value,
                 valor_diaria: parseFloat(document.getElementById('chkValorDiaria').value) || 0,
-                pay_method1: pay1,
-                val_pago1: val1,
-                pay_method2: pay2,
-                val_pago2: val2,
-                total_pago: (val1 + val2)
+                pay_method1: document.getElementById('chkPayMethod1').value,
+                val_pago1: parseFloat(document.getElementById('chkPayVal1').value) || 0
             };
 
-            const { error } = await supabaseClient.from('quartos_status').upsert(payload, { onConflict: 'quarto' });
+            salvarDadosQuartos(mapa);
+            alert('Check-in efetuado com sucesso!');
+            fecharModais();
+            carregarPainel();
+        }
 
-            if (error) alert('Erro ao efetuar Check-in: ' + error.message);
-            else {
-                alert('Check-in no Quarto ' + quartoAtual + ' efetuado com sucesso!');
-                fecharModais();
-                carregarPainel();
-            }
+        function marcarStatusQuarto(novoStatus) {
+            const mapa = carregarDadosQuartos();
+            mapa[quartoAtual] = { quarto: quartoAtual, status: novoStatus };
+            salvarDadosQuartos(mapa);
+            fecharModais();
+            carregarPainel();
+        }
+
+        function executarCheckout() {
+            if (!confirm(`Confirma Check-out do Quarto ${quartoAtual}?`)) return;
+            const mapa = carregarDadosQuartos();
+            delete mapa[quartoAtual];
+            salvarDadosQuartos(mapa);
+            fecharModais();
+            carregarPainel();
         }
 
         function gerarReciboPDF() {
             const nome = document.getElementById('chkNome').value;
-            if (!nome) { alert('Preencha os dados do Check-in primeiro!'); return; }
+            if (!nome) { alert('Preencha os dados primeiro!'); return; }
             
             const elemento = document.createElement('div');
             elemento.style.padding = '20px';
-            elemento.style.fontFamily = 'Arial, sans-serif';
             elemento.innerHTML = `
-                <div style="text-align:center; background-color:#ffffff; padding:15px; border-radius:8px; margin-bottom:15px; border:1px solid #ddd;">
-                    <img src="https://i.postimg.cc/RCLJftjy/Logotipo-Canafistra-Site.png" style="max-width:180px; height:auto; margin-bottom:8px;">
-                    <h2 style="color:#CBA135; margin:0;">CANAFISTRA RESORT</h2>
-                    <p style="margin:4px 0 0 0; color:#16447C; font-size:12px; font-weight:bold;">CRESCENDO À BEIRA RIO</p>
+                <div style="text-align:center; padding:10px;">
+                    <h2 style="color:#CBA135;">CANAFISTRA RESORT</h2>
+                    <p style="color:#16447C; font-weight:bold;">RECIBO DE CHECK-IN</p>
                 </div>
-                <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:15px;">
-                    <tr><td><strong>Hóspede:</strong> ${nome}</td><td><strong>Quarto:</strong> ${quartoAtual}</td></tr>
-                    <tr><td><strong>Documento:</strong> ${document.getElementById('chkTipoDoc').value} - ${document.getElementById('chkNoDoc').value}</td><td><strong>Telefone:</strong> ${document.getElementById('chkTelefone').value}</td></tr>
-                    <tr><td><strong>Entrada:</strong> ${document.getElementById('chkDataEntrada').value} (${document.getElementById('chkHora').value})</td><td><strong>Saída:</strong> ${document.getElementById('chkDataSaida').value}</td></tr>
-                    <tr><td><strong>Diária:</strong> ${document.getElementById('chkValorDiaria').value} XOF</td><td><strong>Noites:</strong> ${document.getElementById('chkTotalNoites').value}</td></tr>
-                </table>
-                <div style="background:#f8f9fa; padding:12px; border:1px solid #ddd; border-radius:6px; text-align:right;">
-                    <p style="margin:0; font-size:14px;"><strong>Total Estadia:</strong> ${document.getElementById('txtTotalEstadiaCalculado').innerText}</p>
-                    <p style="margin:4px 0 0 0; font-size:12px; color:#16a34a;"><strong>Pagamento:</strong> ${document.getElementById('chkPayMethod1').value} (${document.getElementById('chkPayVal1').value} XOF) ${document.getElementById('chkPayMethod2').value ? '| ' + document.getElementById('chkPayMethod2').value + ' (' + document.getElementById('chkPayVal2').value + ' XOF)' : ''}</p>
-                </div>
-                <div style="margin-top:30px; text-align:center; font-size:11px; color:#777;">
-                    <p>Obrigado pela preferência! — Canafistra Resort</p>
-                </div>
+                <hr><br>
+                <p><strong>Hóspede:</strong> ${nome}</p>
+                <p><strong>Quarto:</strong> ${quartoAtual}</p>
+                <p><strong>Período:</strong> ${document.getElementById('chkDataEntrada').value} até ${document.getElementById('chkDataSaida').value}</p>
+                <p><strong>Total Pago:</strong> ${document.getElementById('txtTotalEstadiaCalculado').innerText}</p>
             `;
 
-            const opt = {
-                margin:       10,
-                filename:     `Recibo_${quartoAtual}_${nome.replace(/\s+/g, '_')}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(elemento).save();
+            html2pdf().set({ margin: 10, filename: `Recibo_${quartoAtual}.pdf` }).from(elemento).save();
         }
 
-        async function exportarCSV() {
-            const { data } = await supabaseClient.from('quartos_status').select('*');
-            if (!data || data.length === 0) { alert('Sem dados para exportar.'); return; }
-
-            let csv = 'Quarto,Status,Hospede,Data Entrada,Data Saida,Valor Total (XOF)\n';
-            data.forEach(q => {
-                csv += `"${q.quarto}","${q.status}","${q.hospede || ''}","${q.data_entrada || ''}","${q.data_saida || ''}","${q.total_pago || 0}"\n`;
+        function exportarCSV() {
+            const mapa = carregarDadosQuartos();
+            let csv = 'Quarto,Status,Hospede,Entrada,Saida,Valor\n';
+            Object.values(mapa).forEach(q => {
+                csv += `"${q.quarto}","${q.status}","${q.hospede || ''}","${q.data_entrada || ''}","${q.data_saida || ''}","${q.val_pago1 || 0}"\n`;
             });
 
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([csv], { type: 'text/csv' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.setAttribute('download', `Relatorio_Canafistra_${new Date().toISOString().split('T')[0]}.csv`);
-            document.body.appendChild(link);
+            link.download = `Canafistra_Relatorio.csv`;
             link.click();
-            document.body.removeChild(link);
-        }
-
-        async function marcarStatusQuarto(novoStatus) {
-            const { error } = await supabaseClient.from('quartos_status').upsert({
-                quarto: quartoAtual,
-                status: novoStatus
-            }, { onConflict: 'quarto' });
-
-            if (error) alert('Erro ao alterar status: ' + error.message);
-            else {
-                fecharModais();
-                carregarPainel();
-            }
-        }
-
-        async function executarCheckout() {
-            if (!confirm(`Confirma o Check-out do Quarto ${quartoAtual}?`)) return;
-
-            const { error } = await supabaseClient.from('quartos_status').upsert({
-                quarto: quartoAtual,
-                status: 'Livre',
-                hospede: null,
-                val_pago1: 0,
-                val_pago2: 0
-            }, { onConflict: 'quarto' });
-
-            if (error) alert('Erro no Check-out: ' + error.message);
-            else {
-                alert('Check-out concluído!');
-                fecharModais();
-                carregarPainel();
-            }
-        }
-
-        async function verificarDisponibilidadeReserva() {
-            const entrada = document.getElementById('resDataEntrada').value;
-            const saida = document.getElementById('resDataSaida').value;
-            const selectQuarto = document.getElementById('resQuarto');
-
-            if (!entrada || !saida) return;
-            if (entrada >= saida) {
-                alert('A data de saída deve ser posterior à data de entrada.');
-                return;
-            }
-
-            const { data: agendamentos } = await supabaseClient.from('agendamentos').select('*');
-            const { data: ocupadosHoje } = await supabaseClient.from('quartos_status').select('quarto').eq('status', 'Ocupado');
-
-            const bloqueados = (agendamentos || []).filter(a => {
-                return (entrada < a.data_saida && saida > a.data_entrada);
-            }).map(a => a.quarto);
-
-            if (ocupadosHoje) {
-                ocupadosHoje.forEach(o => { if (!bloqueados.includes(o.quarto)) bloqueados.push(o.quarto); });
-            }
-
-            selectQuarto.innerHTML = '';
-            let disponiveis = 0;
-
-            ESTRUTURA_QUARTOS.forEach(bloco => {
-                bloco.quartos.forEach(qNum => {
-                    if (!bloqueados.includes(qNum)) {
-                        selectQuarto.innerHTML += `<option value="${qNum}">${bloco.categoria}: ${qNum}</option>`;
-                        disponiveis++;
-                    }
-                });
-            });
-
-            if (disponiveis === 0) {
-                selectQuarto.innerHTML = '<option value="">Sem quartos disponíveis nesta data</option>';
-            }
-        }
-
-        async function salvarReserva() {
-            const nome = document.getElementById('resNome').value;
-            const entrada = document.getElementById('resDataEntrada').value;
-            const saida = document.getElementById('resDataSaida').value;
-            const quarto = document.getElementById('resQuarto').value;
-
-            if (!nome || !quarto) { alert('Preencha o nome do hóspede e selecione um quarto!'); return; }
-
-            const pay1 = document.getElementById('resPayMethod1').value;
-            const val1 = parseFloat(document.getElementById('resPayVal1').value) || 0;
-            const pay2 = document.getElementById('resPayMethod2').value;
-            const val2 = parseFloat(document.getElementById('resPayVal2').value) || 0;
-
-            const { error } = await supabaseClient.from('agendamentos').insert([{
-                hospede: nome,
-                data_entrada: entrada,
-                data_saida: saida,
-                quarto: quarto,
-                pay_method1: pay1,
-                val_pago1: val1,
-                pay_method2: pay2,
-                val_pago2: val2,
-                total_pago: (val1 + val2)
-            }]);
-
-            if (error) alert('Erro ao agendar: ' + error.message);
-            else {
-                alert('Reserva agendada com sucesso!');
-                fecharModais();
-                carregarPainel();
-            }
-        }
-
-        async function abrirModalAgendamentos() {
-            document.getElementById('modalAgendamentos').style.display = 'flex';
-            const tabela = document.getElementById('tbAgendamentosBody');
-            tabela.innerHTML = '<tr><td colspan="5" style="text-align:center;">A carregar...</td></tr>';
-
-            const { data, error } = await supabaseClient.from('agendamentos').select('*').order('data_entrada', { ascending: true });
-
-            if (error || !data || data.length === 0) {
-                tabela.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#777;">Nenhum agendamento encontrado.</td></tr>';
-                return;
-            }
-
-            let html = '';
-            data.forEach(a => {
-                let pag = `${a.pay_method1 || 'Cash'}: ${a.val_pago1 || 0} XOF`;
-                if (a.pay_method2 && a.val_pago2 > 0) {
-                    pag += `<br><small>${a.pay_method2}: ${a.val_pago2} XOF</small>`;
-                }
-
-                html += `
-                    <tr>
-                        <td><strong>${a.hospede}</strong></td>
-                        <td><span class="role-badge" style="background:#16a34a;">${a.quarto}</span></td>
-                        <td>${a.data_entrada} a ${a.data_saida}</td>
-                        <td>${pag}</td>
-                        <td><button class="btn-action btn-red" style="padding:4px 8px; font-size:11px;" onclick="cancelarAgendamento(${a.id})">Cancelar</button></td>
-                    </tr>
-                `;
-            });
-
-            tabela.innerHTML = html;
-        }
-
-        async function cancelarAgendamento(id) {
-            if (!confirm('Tem a certeza que deseja cancelar esta reserva?')) return;
-            const { error } = await supabaseClient.from('agendamentos').delete().eq('id', id);
-
-            if (error) alert('Erro ao cancelar agendamento: ' + error.message);
-            else {
-                alert('Reserva cancelada com sucesso!');
-                abrirModalAgendamentos();
-                carregarPainel();
-            }
-        }
-
-        async function abrirModalCalendario() {
-            document.getElementById('modalCalendario').style.display = 'flex';
-            
-            const { data: agendamentos } = await supabaseClient.from('agendamentos').select('*');
-            const eventos = (agendamentos || []).map(a => ({
-                title: `${a.quarto} - ${a.hospede}`,
-                start: a.data_entrada,
-                end: a.data_saida,
-                color: '#16447C'
-            }));
-
-            const calendarEl = document.getElementById('calendar');
-            if (calendarObj) calendarObj.destroy();
-
-            calendarObj = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'pt-br',
-                events: eventos
-            });
-            calendarObj.render();
         }
 
         function abrirModalReserva() {
             document.getElementById('modalReserva').style.display = 'flex';
-            verificarDisponibilidadeReserva();
+            const select = document.getElementById('resQuarto');
+            select.innerHTML = '';
+            ESTRUTURA_QUARTOS.forEach(b => {
+                b.quartos.forEach(q => {
+                    select.innerHTML += `<option value="${q}">${b.categoria}: ${q}</option>`;
+                });
+            });
+        }
+
+        function salvarReserva() {
+            const nome = document.getElementById('resNome').value;
+            const quarto = document.getElementById('resQuarto').value;
+            if (!nome) { alert('Digite o nome do hóspede'); return; }
+
+            const lista = carregarAgendamentos();
+            lista.push({
+                id: Date.now(),
+                hospede: nome,
+                quarto: quarto,
+                data_entrada: document.getElementById('resDataEntrada').value,
+                data_saida: document.getElementById('resDataSaida').value
+            });
+            salvarAgendamentos(lista);
+            alert('Reserva efetuada!');
+            fecharModais();
+        }
+
+        function abrirModalAgendamentos() {
+            document.getElementById('modalAgendamentos').style.display = 'flex';
+            const lista = carregarAgendamentos();
+            const tb = document.getElementById('tbAgendamentosBody');
+            if (lista.length === 0) {
+                tb.innerHTML = '<tr><td colspan="4" style="text-align:center;">Sem reservas.</td></tr>';
+                return;
+            }
+            let html = '';
+            lista.forEach(a => {
+                html += `<tr><td>${a.hospede}</td><td>${a.quarto}</td><td>${a.data_entrada} a ${a.data_saida}</td><td><button onclick="cancelarAgendamento(${a.id})">❌</button></td></tr>`;
+            });
+            tb.innerHTML = html;
+        }
+
+        function cancelarAgendamento(id) {
+            let lista = carregarAgendamentos();
+            lista = lista.filter(a => a.id !== id);
+            salvarAgendamentos(lista);
+            abrirModalAgendamentos();
+        }
+
+        function abrirModalCalendario() {
+            document.getElementById('modalCalendario').style.display = 'flex';
+            const lista = carregarAgendamentos();
+            const eventos = lista.map(a => ({ title: `${a.quarto} - ${a.hospede}`, start: a.data_entrada, end: a.data_saida, color: '#16447C' }));
+            
+            const calendarEl = document.getElementById('calendar');
+            if (calendarObj) calendarObj.destroy();
+            calendarObj = new FullCalendar.Calendar(calendarEl, { initialView: 'dayGridMonth', locale: 'pt-br', events: eventos });
+            calendarObj.render();
         }
 
         function fecharModais() {
@@ -1389,4 +891,3 @@
     </script>
 </body>
 </html>
-
