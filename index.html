@@ -272,7 +272,7 @@
                 <span id="lblPerfil" class="role-badge">ADMINISTRADOR</span>
             </div>
             <div class="subtitle">Painel de Gestão Operacional & Reservas</div>
-            <div><span id="lblSyncStatus" class="sync-badge sync-local">🔄 Modo Local</span></div>
+            <div><span id="lblSyncStatus" class="sync-badge sync-local">🔄 A verificar ligação...</span></div>
         </div>
 
         <div class="busca-wrapper">
@@ -648,16 +648,16 @@
     <script>
         // ==========================================
         // CONFIGURAÇÃO DO FIREBASE (MULTIDISPOSITIVOS)
-        // Substitua os valores abaixo pelas suas chaves da Consola do Firebase!
+        // Chaves atualizadas para o projeto Canafistra-Resort
         // ==========================================
         const firebaseConfig = {
-            apiKey: "SUA_API_KEY_AQUI",
-            authDomain: "seu-projeto.firebaseapp.com",
-            databaseURL: "https://seu-projeto-default-rtdb.firebaseio.com",
-            projectId: "seu-projeto",
-            storageBucket: "seu-projeto.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
+            apiKey: "AIzaSyCFgR361qHDg15d1EXypSRY3KuuThlqFog",
+            authDomain: "canafistra-resort.firebaseapp.com",
+            databaseURL: "https://canafistra-resort-default-rtdb.firebaseio.com",
+            projectId: "canafistra-resort",
+            storageBucket: "canafistra-resort.firebasestorage.app",
+            messagingSenderId: "329783020616",
+            appId: "1:329783020616:web:0428cf65e22dfb68b81c7d"
         };
 
         let useFirebase = false;
@@ -671,7 +671,7 @@
                 useFirebase = true;
             }
         } catch (e) {
-            console.warn("Firebase não configurado ainda. A utilizar armazenamento local.", e);
+            console.warn("Erro ao iniciar Firebase. A utilizar armazenamento local.", e);
         }
 
         const ESTRUTURA_QUARTOS = [
@@ -695,7 +695,7 @@
             const badge = document.getElementById('lblSyncStatus');
             if (useFirebase && db) {
                 badge.className = "sync-badge sync-online";
-                badge.innerText = "🌐 Sincronizado (Multi-Dispositivos)";
+                badge.innerText = "🌐 Sincronizado em Tempo Real (Multi-Dispositivos)";
 
                 // Ouvir alterações de quartos em tempo real
                 db.ref('quartos').on('value', snap => {
@@ -718,7 +718,7 @@
                 });
             } else {
                 badge.className = "sync-badge sync-local";
-                badge.innerText = "🔄 Modo Local (Aguardando Chaves do Firebase)";
+                badge.innerText = "🔄 Modo Local (Apenas neste dispositivo)";
                 
                 cacheQuartos = JSON.parse(localStorage.getItem('canafistra_quartos') || '{}');
                 cacheAgendamentos = JSON.parse(localStorage.getItem('canafistra_agendamentos') || '[]');
