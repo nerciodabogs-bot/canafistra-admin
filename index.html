@@ -305,141 +305,148 @@
         <div id="listaBlocos"></div>
     </div>
 
-    <!-- MODAL DE CHECK-IN -->
+    <!-- MODAL DE CHECK-IN / GESTÃO DO QUARTO -->
     <div id="modalCheckin" class="modal">
         <div class="modal-content">
-            <h3><span id="chkTitulo">Check-in: Quarto</span> <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
+            <h3><span id="chkTitulo">Gestão: Quarto</span> <span class="close-btn" onclick="fecharModais()">&times;</span></h3>
             <hr style="margin:10px 0;">
             
-            <div class="form-group">
-                <label>Nome Completo do Hóspede:</label>
-                <input type="text" id="chkNome" placeholder="Ex: João Silva">
-            </div>
-
-            <div class="form-row">
+            <div id="secFormCheckin">
                 <div class="form-group">
-                    <label>Telefone:</label>
-                    <input type="text" id="chkTelefone" placeholder="+245 ...">
-                </div>
-                <div class="form-group">
-                    <label>Hora Chegada:</label>
-                    <input type="time" id="chkHora" value="14:00">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Data Entrada:</label>
-                    <input type="date" id="chkDataEntrada" onchange="calcularEstadiaCheckin()">
-                </div>
-                <div class="form-group">
-                    <label>Data Saída:</label>
-                    <input type="date" id="chkDataSaida" onchange="calcularEstadiaCheckin()">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Nacionalidade:</label>
-                    <input type="text" id="chkNacionalidade" placeholder="Ex: Guineense">
-                </div>
-                <div class="form-group">
-                    <label>Tipo Documento:</label>
-                    <select id="chkTipoDoc">
-                        <option value="Bilhete de Identidade">Bilhete de Identidade (BI)</option>
-                        <option value="Passaporte">Passaporte</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Nº do Documento:</label>
-                <input type="text" id="chkNoDoc" placeholder="Ex: 00374416">
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Valor Diária (XOF):</label>
-                    <input type="number" id="chkValorDiaria" placeholder="25000" oninput="calcularEstadiaCheckin()">
-                </div>
-                <div class="form-group">
-                    <label>Total Noites:</label>
-                    <input type="number" id="chkTotalNoites" value="1" readonly style="background:#f1f5f9;">
-                </div>
-            </div>
-
-            <div style="background:#f0fdf4; padding:10px; border-radius:6px; text-align:center; margin-bottom:12px;">
-                <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL ESTADIA (XOF):</span>
-                <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtTotalEstadiaCalculado">0 XOF</div>
-            </div>
-
-            <!-- SEÇÃO DE PAGAMENTOS -->
-            <div style="background:#f8fafc; border:1px dashed #cbd5e1; padding:12px; border-radius:8px; margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <label style="font-size:11px; font-weight:bold; color:#16447C;">Forma de Pagamento:</label>
-                    <button type="button" class="btn-toggle-multi" onclick="togglePagamentoMultiploCheckin()">➕ Pagamento Múltiplo</button>
+                    <label>Nome Completo do Hóspede:</label>
+                    <input type="text" id="chkNome" placeholder="Ex: João Silva">
                 </div>
 
-                <!-- PAGAMENTO 1 -->
                 <div class="form-row">
                     <div class="form-group">
-                        <select id="chkPayMethod1">
-                            <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            <option value="Orange Money">Orange Money</option>
-                            <option value="Pagamento por Cartão">Pagamento por Cartão</option>
-                        </select>
+                        <label>Telefone:</label>
+                        <input type="text" id="chkTelefone" placeholder="+245 ...">
                     </div>
                     <div class="form-group">
-                        <input type="number" id="chkPayVal1" placeholder="Valor 1 (XOF)">
+                        <label>Hora Chegada:</label>
+                        <input type="time" id="chkHora" value="14:00">
                     </div>
                 </div>
 
-                <!-- PAGAMENTOS MÚLTIPLOS (OPCIONAL 2 E 3) -->
-                <div id="divPayMultiCheckin" style="display:none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Data Entrada:</label>
+                        <input type="date" id="chkDataEntrada" onchange="calcularEstadiaCheckin()">
+                    </div>
+                    <div class="form-group">
+                        <label>Data Saída:</label>
+                        <input type="date" id="chkDataSaida" onchange="calcularEstadiaCheckin()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nacionalidade:</label>
+                        <input type="text" id="chkNacionalidade" placeholder="Ex: Guineense">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo Documento:</label>
+                        <select id="chkTipoDoc">
+                            <option value="Bilhete de Identidade">Bilhete de Identidade (BI)</option>
+                            <option value="Passaporte">Passaporte</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nº do Documento:</label>
+                    <input type="text" id="chkNoDoc" placeholder="Ex: 00374416">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Valor Diária (XOF):</label>
+                        <input type="number" id="chkValorDiaria" placeholder="25000" oninput="calcularEstadiaCheckin()">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Noites:</label>
+                        <input type="number" id="chkTotalNoites" value="1" readonly style="background:#f1f5f9;">
+                    </div>
+                </div>
+
+                <div style="background:#f0fdf4; padding:10px; border-radius:6px; text-align:center; margin-bottom:12px;">
+                    <span style="font-size:11px; color:#166534; font-weight:bold;">TOTAL ESTADIA (XOF):</span>
+                    <div style="font-size:20px; font-weight:bold; color:#15803d;" id="txtTotalEstadiaCalculado">0 XOF</div>
+                </div>
+
+                <!-- SEÇÃO DE PAGAMENTOS -->
+                <div style="background:#f8fafc; border:1px dashed #cbd5e1; padding:12px; border-radius:8px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <label style="font-size:11px; font-weight:bold; color:#16447C;">Forma de Pagamento:</label>
+                        <button type="button" class="btn-toggle-multi" onclick="togglePagamentoMultiploCheckin()">➕ Pagamento Múltiplo</button>
+                    </div>
+
+                    <!-- PAGAMENTO 1 -->
                     <div class="form-row">
                         <div class="form-group">
-                            <select id="chkPayMethod2">
-                                <option value="Orange Money">Orange Money</option>
+                            <select id="chkPayMethod1">
                                 <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                                <option value="Orange Money">Orange Money</option>
                                 <option value="Pagamento por Cartão">Pagamento por Cartão</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" id="chkPayVal2" placeholder="Valor 2 (XOF)">
+                            <input type="number" id="chkPayVal1" placeholder="Valor 1 (XOF)">
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <select id="chkPayMethod3">
-                                <option value="Pagamento por Cartão">Pagamento por Cartão</option>
-                                <option value="Orange Money">Orange Money</option>
-                                <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
-                            </select>
+                    <!-- PAGAMENTOS MÚLTIPLOS (OPCIONAL 2 E 3) -->
+                    <div id="divPayMultiCheckin" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <select id="chkPayMethod2">
+                                    <option value="Orange Money">Orange Money</option>
+                                    <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                                    <option value="Pagamento por Cartão">Pagamento por Cartão</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="chkPayVal2" placeholder="Valor 2 (XOF)">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="number" id="chkPayVal3" placeholder="Valor 3 (XOF)">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <select id="chkPayMethod3">
+                                    <option value="Pagamento por Cartão">Pagamento por Cartão</option>
+                                    <option value="Orange Money">Orange Money</option>
+                                    <option value="Cash (Dinheiro)">Cash (Dinheiro)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" id="chkPayVal3" placeholder="Valor 3 (XOF)">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group" style="margin-bottom:0;">
-                    <label>Status do Pagamento:</label>
-                    <select id="chkStatusPagamento">
-                        <option value="Pago">Pago</option>
-                        <option value="Parcial">Parcial / Adiantado</option>
-                        <option value="Pendente">Pendente</option>
-                    </select>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>Status do Pagamento:</label>
+                        <select id="chkStatusPagamento">
+                            <option value="Pago">Pago</option>
+                            <option value="Parcial">Parcial / Adiantado</option>
+                            <option value="Pendente">Pendente</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
-                <button class="btn-action btn-green" onclick="confirmarCheckin()">Confirmar Check-in</button>
-                <button class="btn-action btn-blue" onclick="gerarReciboPDF()">📄 Recibo PDF</button>
-                <button class="btn-action btn-purple" onclick="marcarStatusQuarto('Manutenção')">🛠️ Manutenção</button>
-                <button class="btn-action btn-orange" onclick="marcarStatusQuarto('Limpeza')">🧹 Limpeza</button>
-                <button class="btn-action btn-red" id="btnCheckout" onclick="executarCheckout()" style="display:none;">Check-out</button>
+            <div id="secLimpezaQuarto" style="display:none; text-align:center; padding:15px 5px;">
+                <p style="font-size:14px; font-weight:bold; color:#713f12; margin-bottom:15px;">🧹 Este quarto encontra-se atualmente em estado de <strong>LIMPEZA</strong>.</p>
+                <button class="btn-action btn-green" onclick="concluirLimpezaQuarto()" style="padding:12px 20px; font-size:14px;">✅ Concluir Limpeza (Marcar como Livre)</button>
+            </div>
+
+            <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; margin-top:10px;">
+                <button class="btn-action btn-green" id="btnConfirmarCheckin" onclick="confirmarCheckin()">Confirmar Check-in</button>
+                <button class="btn-action btn-blue" id="btnReciboCheckin" onclick="gerarReciboPDF()">📄 Recibo PDF</button>
+                <button class="btn-action btn-purple" id="btnManutencaoQuarto" onclick="marcarStatusQuarto('Manutenção')">🛠️ Manutenção</button>
+                <button class="btn-action btn-orange" id="btnLimpezaQuarto" onclick="marcarStatusQuarto('Limpeza')">🧹 Limpeza</button>
+                <button class="btn-action btn-red" id="btnCheckout" onclick="executarCheckout()" style="display:none;">🚪 Check-out</button>
                 <button class="btn-action btn-gray" onclick="fecharModais()">Cancelar</button>
             </div>
         </div>
@@ -650,6 +657,14 @@
             localStorage.setItem('canafistra_agendamentos', JSON.stringify(lista));
         }
 
+        function carregarHistorico() {
+            return JSON.parse(localStorage.getItem('canafistra_historico') || '[]');
+        }
+
+        function salvarHistorico(lista) {
+            localStorage.setItem('canafistra_historico', JSON.stringify(lista));
+        }
+
         function efetuarLogin() {
             const pwd = document.getElementById('loginPassword').value.trim();
             if (pwd === 'canafistra2026') {
@@ -690,6 +705,7 @@
         function carregarPainel() {
             const mapa = carregarDadosQuartos();
             const agendamentos = carregarAgendamentos();
+            const historico = carregarHistorico();
 
             let cLivre = 0, cOcupado = 0, cLimpeza = 0, cManutencao = 0;
             let totCash = 0, totOrange = 0, totCartao = 0;
@@ -702,7 +718,7 @@
                 else if (metodo.includes('Cartão') || metodo.includes('Multibanco')) totCartao += v;
             };
 
-            // Somar pagamentos dos Check-ins Ativos
+            // 1. Somar pagamentos dos Check-ins Ativos
             Object.values(mapa).forEach(q => {
                 if (q.status === 'Ocupado') cOcupado++;
                 else if (q.status === 'Limpeza') cLimpeza++;
@@ -713,11 +729,18 @@
                 somarPagamento(q.pay_method3, q.val_pago3);
             });
 
-            // Somar adiantamentos das Reservas
+            // 2. Somar adiantamentos das Reservas
             agendamentos.forEach(a => {
                 somarPagamento(a.pay_method1, a.val_pago1);
                 somarPagamento(a.pay_method2, a.val_pago2);
                 somarPagamento(a.pay_method3, a.val_pago3);
+            });
+
+            // 3. Somar HISTÓRICO ACUMULADO de Check-outs já realizados!
+            historico.forEach(h => {
+                somarPagamento(h.pay_method1, h.val_pago1);
+                somarPagamento(h.pay_method2, h.val_pago2);
+                somarPagamento(h.pay_method3, h.val_pago3);
             });
 
             cLivre = 52 - (cOcupado + cLimpeza + cManutencao);
@@ -785,48 +808,70 @@
 
         function abrirModalCheckin(numQuarto) {
             quartoAtual = numQuarto;
-            document.getElementById('chkTitulo').innerText = 'Check-in: Quarto ' + numQuarto;
+            document.getElementById('chkTitulo').innerText = 'Gestão: Quarto ' + numQuarto;
             
             const mapa = carregarDadosQuartos();
             const data = mapa[numQuarto];
 
-            if (data && data.status === 'Ocupado') {
-                document.getElementById('chkNome').value = data.hospede || '';
-                document.getElementById('chkTelefone').value = data.telefone || '';
-                document.getElementById('chkHora').value = data.hora || '14:00';
-                document.getElementById('chkNacionalidade').value = data.nacionalidade || '';
-                document.getElementById('chkTipoDoc').value = data.tipo_doc || 'Bilhete de Identidade';
-                document.getElementById('chkNoDoc').value = data.no_doc || '';
-                document.getElementById('chkValorDiaria').value = data.valor_diaria || '';
-                document.getElementById('chkPayMethod1').value = data.pay_method1 || 'Cash (Dinheiro)';
-                document.getElementById('chkPayVal1').value = data.val_pago1 || '';
-                
-                if ((data.val_pago2 && parseFloat(data.val_pago2) > 0) || (data.val_pago3 && parseFloat(data.val_pago3) > 0)) {
-                    document.getElementById('divPayMultiCheckin').style.display = 'block';
-                    document.getElementById('chkPayMethod2').value = data.pay_method2 || 'Orange Money';
-                    document.getElementById('chkPayVal2').value = data.val_pago2 || '';
-                    document.getElementById('chkPayMethod3').value = data.pay_method3 || 'Pagamento por Cartão';
-                    document.getElementById('chkPayVal3').value = data.val_pago3 || '';
+            const secForm = document.getElementById('secFormCheckin');
+            const secLimpeza = document.getElementById('secLimpezaQuarto');
+
+            if (data && data.status === 'Limpeza') {
+                secForm.style.display = 'none';
+                secLimpeza.style.display = 'block';
+
+                document.getElementById('btnConfirmarCheckin').style.display = 'none';
+                document.getElementById('btnReciboCheckin').style.display = 'none';
+                document.getElementById('btnCheckout').style.display = 'none';
+                document.getElementById('btnLimpezaQuarto').style.display = 'none';
+                document.getElementById('btnManutencaoQuarto').style.display = 'inline-flex';
+            } else {
+                secForm.style.display = 'block';
+                secLimpeza.style.display = 'none';
+
+                document.getElementById('btnConfirmarCheckin').style.display = 'inline-flex';
+                document.getElementById('btnReciboCheckin').style.display = 'inline-flex';
+                document.getElementById('btnLimpezaQuarto').style.display = 'inline-flex';
+                document.getElementById('btnManutencaoQuarto').style.display = 'inline-flex';
+
+                if (data && data.status === 'Ocupado') {
+                    document.getElementById('chkNome').value = data.hospede || '';
+                    document.getElementById('chkTelefone').value = data.telefone || '';
+                    document.getElementById('chkHora').value = data.hora || '14:00';
+                    document.getElementById('chkNacionalidade').value = data.nacionalidade || '';
+                    document.getElementById('chkTipoDoc').value = data.tipo_doc || 'Bilhete de Identidade';
+                    document.getElementById('chkNoDoc').value = data.no_doc || '';
+                    document.getElementById('chkValorDiaria').value = data.valor_diaria || '';
+                    document.getElementById('chkPayMethod1').value = data.pay_method1 || 'Cash (Dinheiro)';
+                    document.getElementById('chkPayVal1').value = data.val_pago1 || '';
+                    
+                    if ((data.val_pago2 && parseFloat(data.val_pago2) > 0) || (data.val_pago3 && parseFloat(data.val_pago3) > 0)) {
+                        document.getElementById('divPayMultiCheckin').style.display = 'block';
+                        document.getElementById('chkPayMethod2').value = data.pay_method2 || 'Orange Money';
+                        document.getElementById('chkPayVal2').value = data.val_pago2 || '';
+                        document.getElementById('chkPayMethod3').value = data.pay_method3 || 'Pagamento por Cartão';
+                        document.getElementById('chkPayVal3').value = data.val_pago3 || '';
+                    } else {
+                        document.getElementById('divPayMultiCheckin').style.display = 'none';
+                        document.getElementById('chkPayVal2').value = '';
+                        document.getElementById('chkPayVal3').value = '';
+                    }
+
+                    document.getElementById('chkStatusPagamento').value = data.status_pagamento || 'Pago';
+                    document.getElementById('btnCheckout').style.display = 'inline-flex';
                 } else {
-                    document.getElementById('divPayMultiCheckin').style.display = 'none';
+                    document.getElementById('chkNome').value = '';
+                    document.getElementById('chkTelefone').value = '';
+                    document.getElementById('chkNacionalidade').value = '';
+                    document.getElementById('chkNoDoc').value = '';
+                    document.getElementById('chkValorDiaria').value = '';
+                    document.getElementById('chkPayVal1').value = '';
                     document.getElementById('chkPayVal2').value = '';
                     document.getElementById('chkPayVal3').value = '';
+                    document.getElementById('divPayMultiCheckin').style.display = 'none';
+                    document.getElementById('chkStatusPagamento').value = 'Pago';
+                    document.getElementById('btnCheckout').style.display = 'none';
                 }
-
-                document.getElementById('chkStatusPagamento').value = data.status_pagamento || 'Pago';
-                document.getElementById('btnCheckout').style.display = 'inline-flex';
-            } else {
-                document.getElementById('chkNome').value = '';
-                document.getElementById('chkTelefone').value = '';
-                document.getElementById('chkNacionalidade').value = '';
-                document.getElementById('chkNoDoc').value = '';
-                document.getElementById('chkValorDiaria').value = '';
-                document.getElementById('chkPayVal1').value = '';
-                document.getElementById('chkPayVal2').value = '';
-                document.getElementById('chkPayVal3').value = '';
-                document.getElementById('divPayMultiCheckin').style.display = 'none';
-                document.getElementById('chkStatusPagamento').value = 'Pago';
-                document.getElementById('btnCheckout').style.display = 'none';
             }
 
             calcularEstadiaCheckin();
@@ -890,11 +935,46 @@
             carregarPainel();
         }
 
-        function executarCheckout() {
-            if (!confirm(`Confirma Check-out do Quarto ${quartoAtual}?`)) return;
+        function concluirLimpezaQuarto() {
             const mapa = carregarDadosQuartos();
-            delete mapa[quartoAtual];
+            delete mapa[quartoAtual]; // Quarto volta a ficar completamente Livre
             salvarDadosQuartos(mapa);
+            alert(`Limpeza do Quarto ${quartoAtual} concluída! O quarto agora está Livre.`);
+            fecharModais();
+            carregarPainel();
+        }
+
+        function executarCheckout() {
+            if (!confirm(`Confirma Check-out do Quarto ${quartoAtual}? O quarto passará para LIMPEZA.`)) return;
+            
+            const mapa = carregarDadosQuartos();
+            const dataQuarto = mapa[quartoAtual];
+
+            if (dataQuarto) {
+                // 1. Guardar a venda no histórico acumulado para NÃO PERDER A RECEITA
+                const historico = carregarHistorico();
+                historico.push({
+                    quarto: quartoAtual,
+                    hospede: dataQuarto.hospede,
+                    data_checkout: new Date().toISOString().split('T')[0],
+                    pay_method1: dataQuarto.pay_method1,
+                    val_pago1: dataQuarto.val_pago1,
+                    pay_method2: dataQuarto.pay_method2,
+                    val_pago2: dataQuarto.val_pago2,
+                    pay_method3: dataQuarto.pay_method3,
+                    val_pago3: dataQuarto.val_pago3
+                });
+                salvarHistorico(historico);
+            }
+
+            // 2. Colocar o quarto em Limpeza automaticamente
+            mapa[quartoAtual] = {
+                quarto: quartoAtual,
+                status: 'Limpeza'
+            };
+
+            salvarDadosQuartos(mapa);
+            alert(`Check-out efetuado! Quarto ${quartoAtual} foi colocado em LIMPEZA.`);
             fecharModais();
             carregarPainel();
         }
@@ -934,10 +1014,20 @@
 
         function exportarCSV() {
             const mapa = carregarDadosQuartos();
+            const historico = carregarHistorico();
+
             let csv = 'Quarto,Status,Hospede,Telefone,Entrada,Saida,TotalPago,StatusPagamento\n';
+            
+            // Quartos Ativos
             Object.values(mapa).forEach(q => {
                 const tot = (parseFloat(q.val_pago1) || 0) + (parseFloat(q.val_pago2) || 0) + (parseFloat(q.val_pago3) || 0);
                 csv += `"${q.quarto}","${q.status}","${q.hospede || ''}","${q.telefone || ''}","${q.data_entrada || ''}","${q.data_saida || ''}","${tot}","${q.status_pagamento || ''}"\n`;
+            });
+
+            // Histórico de Checkouts
+            historico.forEach(h => {
+                const tot = (parseFloat(h.val_pago1) || 0) + (parseFloat(h.val_pago2) || 0) + (parseFloat(h.val_pago3) || 0);
+                csv += `"${h.quarto}","Concluido (Checkout)","${h.hospede || ''}","","","${h.data_checkout}","${tot}","Pago"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
